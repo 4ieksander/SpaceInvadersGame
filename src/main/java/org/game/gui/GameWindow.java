@@ -14,10 +14,11 @@ public class GameWindow extends JFrame {
     private GameEngine gameEngine;
     private InputHandler inputHandler;
     private GameSettings gameSettings;
+    private Icon shipIcon;
 
-
-    public GameWindow() {
-        frame = new JFrame("Space Invaders");
+    public GameWindow(String playerName, Icon shipIcon) {
+        this.shipIcon = shipIcon;
+        frame = new JFrame("Space Invaders - " + playerName);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 700);
         frame.setResizable(false);
@@ -40,7 +41,7 @@ public class GameWindow extends JFrame {
 
         GamePanel gamePanel = new GamePanel(inputHandler);
 
-        gameEngine = new GameEngine(gameSettings);
+        gameEngine =  new GameEngine(gameSettings, shipIcon);
         gameEngine.setGamePanel(gamePanel);
         gameEngine.setInputHandler(inputHandler);
         gameEngine.initializeGame();
@@ -49,6 +50,9 @@ public class GameWindow extends JFrame {
         frame.setVisible(true);
     }
 
+    public static void startGame(String playerName, Icon shipIcon) {
+        SwingUtilities.invokeLater(() -> new GameWindow(playerName, shipIcon));
+    }
 
     private void openSettingsDialog() {
         SettingsDialog settingsDialog = new SettingsDialog(this, gameSettings);
@@ -138,6 +142,6 @@ public class GameWindow extends JFrame {
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(GameWindow::new);
+//        SwingUtilities.invokeLater(GameWindow::new);
     }
 }

@@ -4,8 +4,10 @@ import org.game.interfaces.ILiveObject;
 
 import java.sql.Time;
 import java.util.Timer;
+import javax.swing.*;
 
 public class Player implements ILiveObject {
+    private JLabel shipLabel;
     private int score;
     private int xPosition;
     private int yPosition;
@@ -20,6 +22,7 @@ public class Player implements ILiveObject {
 
 
     public Player(int startX, int startY, int initialHealth) {
+        shipLabel = new JLabel();
         this.xPosition = startX;
         this.yPosition = startY;
         this.health = initialHealth;
@@ -72,6 +75,11 @@ public class Player implements ILiveObject {
             bullet.hit();
             return bullet;
         }
+    }
+
+
+    public void setShipIcon(Icon icon) {
+        shipLabel.setIcon(icon);
     }
 
     public int getXPosition() {

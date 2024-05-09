@@ -57,7 +57,7 @@ public class GamePanel extends JPanel {
 
     public void displayGameOver() {
         gameOverLabel.setVisible(true);
-        JOptionPane.showMessageDialog(this, "Game Over! Wróg dotarł do linii gracza.", "Koniec Gry", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Game Over!", "Koniec Gry", JOptionPane.ERROR_MESSAGE);
         repaint();
     }
 

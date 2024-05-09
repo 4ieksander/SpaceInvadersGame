@@ -27,10 +27,12 @@ public class GameEngine {
     private Timer shootingTimer;
     private int shootingInterval = 2000;
     private boolean gameOver = false;
+    private Icon shipIcon;
 
 
-    public GameEngine(GameSettings gameSettings) {
+    public GameEngine(GameSettings gameSettings, Icon shipIcon) {
         this.settings = gameSettings;
+        this.shipIcon = shipIcon;
         this.enemies = new ArrayList<>();
         this.bullets = new ArrayList<>();
         this.isRunning = false;
@@ -43,6 +45,7 @@ public class GameEngine {
         setupEnemies();
         player = new Player(380, 510, 3);
         playerLives = 3;
+        this.player.setShipIcon(shipIcon);
         this.gamePanel.setGameObjects(enemies, bullets, player);
         this.collisionManager = new CollisionManager(enemies, bullets, player);
         initializeShooting();
@@ -101,6 +104,7 @@ public class GameEngine {
         updateBullets();
         moveEnemyAndAddScore();
         catchKeyboard();
+        checkPlayerLives();
         gamePanel.setGameObjects(enemies, bullets, player);
         checkGameOver();
     }
