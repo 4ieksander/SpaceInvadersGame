@@ -27,8 +27,8 @@ public class Enemy implements ILiveObject, IMovableVertically {
         this.yPosition = startY;
         this.health = initialHealth;
         this.alive = true;
-        this.width = 20;
-        this.height = 20;
+        this.width = width;
+        this.height = height;
     }
 
     public static boolean isMovingRight() {

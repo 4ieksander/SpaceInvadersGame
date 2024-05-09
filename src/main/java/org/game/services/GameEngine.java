@@ -37,6 +37,7 @@ public class GameEngine {
         setupEnemies();
         player = new Player(380, 550, 3);
         this.gamePanel.setGameObjects(enemies, bullets, player);
+        
         this.collisionManager = new CollisionManager(enemies, bullets, player);
 
     }
@@ -110,12 +111,20 @@ public class GameEngine {
     }
 
     private void setupEnemies() {
-        int numberOfEnemies = settings.getEnemyCount();
+        int numberOfEnemiesPerLine = settings.getEnemyCountPerLine();
+        int distanceBetweenEnemies = settings.getDistanceBetweenEnemies();
         int rows = settings.getEnemyRows();
         for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < numberOfEnemies / rows; col++) {
-                Enemy enemy = new Enemy(col * 50, 40+ row * 50, 1);
-                enemies.add(enemy);
+            for (int col = 0; col < numberOfEnemiesPerLine; col++) {
+                if (settings.isHardcoreMode()){
+                    Enemy enemy = new Enemy(col * distanceBetweenEnemies, 40 + row * distanceBetweenEnemies, 1, 10, 10);
+                    enemies.add(enemy);
+                }
+                else{
+                    Enemy enemy = new Enemy(col * distanceBetweenEnemies, 40+ row * 40, 1);
+                    enemies.add(enemy);
+
+                }
             }
         }
     }

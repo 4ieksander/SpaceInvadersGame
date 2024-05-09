@@ -18,6 +18,17 @@ public class GameSettings {
     }
 
     public int getEnemyCountPerLine(){
+        if (hardcoreMode){
+            if (difficultyLevel == DifficultyLevel.EASY){
+                return 12;
+            }
+            else if (difficultyLevel == DifficultyLevel.MEDIUM){
+                return 24;
+            }
+            else {
+                return 32;
+            }
+        }
         if (difficultyLevel == DifficultyLevel.EASY){
             return 8;
         }
@@ -26,6 +37,30 @@ public class GameSettings {
         }
         else{
             return 24;
+        }
+    }
+
+    public int getDistanceBetweenEnemies(){
+        if (hardcoreMode){
+            if (difficultyLevel == DifficultyLevel.EASY){
+                return 40;
+            }
+            else if (difficultyLevel == DifficultyLevel.MEDIUM){
+                return 30;
+            }
+            else {
+                return 20;
+            }
+        }
+
+        if (difficultyLevel == DifficultyLevel.EASY){
+            return 50;
+        }
+        else if (difficultyLevel == DifficultyLevel.MEDIUM){
+            return 40;
+        }
+        else {
+            return 30;
         }
     }
 

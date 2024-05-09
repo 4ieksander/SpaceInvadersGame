@@ -31,17 +31,19 @@ public class GameWindow extends JFrame {
         JButton pauseButton = new JButton("Pauza");
         startButton.addActionListener(e -> startGame());
         pauseButton.addActionListener(e -> pauseGame());
+        startButton.setFocusable(false);
+        pauseButton.setFocusable(false);
+
         JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         northPanel.add(startButton);
         northPanel.add(pauseButton);
 
         GamePanel gamePanel = new GamePanel(inputHandler);
 
-
         gameEngine = new GameEngine(gameSettings);
         gameEngine.setGamePanel(gamePanel);
-        gameEngine.initializeGame();
         gameEngine.setInputHandler(inputHandler);
+        gameEngine.initializeGame();
 
         initializeUI(gamePanel, northPanel);
         frame.setVisible(true);
@@ -105,6 +107,10 @@ public class GameWindow extends JFrame {
         JButton leftButton = new JButton("<");
         JButton shootButton = new JButton("Shoot");
         JButton rightButton = new JButton(">");
+
+        leftButton.setFocusable(false);
+        shootButton.setFocusable(false);
+        rightButton.setFocusable(false);
 
         leftButton.addActionListener(e -> gameEngine.getPlayer().moveLeft());
         shootButton.addActionListener(e -> gameEngine.addBullet(gameEngine.getPlayer().shoot()));
