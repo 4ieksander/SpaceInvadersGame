@@ -15,7 +15,7 @@ public class GameEngine {
     private Player player;
     private boolean isRunning;
     private Thread gameThread;
-    private JPanel gamePanel;
+    private GamePanel gamePanel;
     private InputHandler inputHandler;
     private GameSettings settings;
 
@@ -40,6 +40,8 @@ public class GameEngine {
         bullets.clear();
         setupEnemies();
         player = new Player(350, 450, 3);
+        this.gamePanel.setGameObjects(enemies, bullets, player);
+
     }
 
 
@@ -91,6 +93,7 @@ public class GameEngine {
         if (inputHandler.isSpacePressed()) {
             player.shoot();
         }
+        gamePanel.setGameObjects(enemies, bullets, player);
         //TODO
     }
 
@@ -159,7 +162,7 @@ public class GameEngine {
         isRunning = running;
     }
 
-    public void setGamePanel(JPanel panel) {
+    public void setGamePanel(GamePanel panel) {
         this.gamePanel = panel;
     }
     public void setInputHandler(InputHandler inputHandler) {

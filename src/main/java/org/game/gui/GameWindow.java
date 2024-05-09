@@ -2,11 +2,11 @@ package org.game.gui;
 
 import org.game.models.GameSettings;
 import org.game.services.GameEngine;
-import org.game.services.RenderService;
 import org.game.models.Player;
 import org.game.models.Enemy;
 import org.game.models.Bullet;
 import org.game.services.InputHandler;
+import org.game.services.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +17,6 @@ import java.util.Set;
 public class GameWindow {
     private JFrame frame;
     private GameEngine gameEngine;
-    private RenderService renderService;
     private InputHandler inputHandler;
 
     public GameWindow() {
@@ -28,17 +27,14 @@ public class GameWindow {
         frame.setLayout(new BorderLayout());
         inputHandler = new InputHandler();
 
-        JPanel gamePanel = createGamePanel();
+        GamePanel gamePanel = new GamePanel(inputHandler);
 
 
         gameEngine = new GameEngine(new GameSettings());
         gameEngine.setGamePanel(gamePanel);
-        gameEngine.setInputHandler(inputHandler);
         gameEngine.initializeGame();
-        Enemy enemy = new Enemy(50,50,100); //test
-//        gameEngine.addEnemy(enemy);
+        gameEngine.setInputHandler(inputHandler);
 
-        renderService = new RenderService();
 
         initializeUI(gamePanel);
         frame.setVisible(true);
@@ -51,22 +47,7 @@ public class GameWindow {
         frame.add(createStatusPanel(), BorderLayout.NORTH);
     }
 
-    private JPanel createGamePanel() {
-        JPanel gamePanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                renderService.drawPlayer(g, gameEngine.getPlayer());
-                renderService.drawEnemies(g, gameEngine.getEnemies());
-                renderService.drawBullets(g, gameEngine.getBullets());
-            }
-        };
-        gamePanel.addKeyListener(inputHandler);
-        gamePanel.setFocusable(true);
-        gamePanel.requestFocusInWindow();
-        gamePanel.setBackground(Color.BLACK);
-        return gamePanel;
-    }
+
 
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
