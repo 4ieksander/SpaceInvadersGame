@@ -32,7 +32,7 @@ public class SettingsDialog extends JDialog {
         panel.setLayout(new GridLayout(5, 2, 10, 10));
 
         panel.add(new JLabel("Prędkość zniżania się wrogów:"));
-        descentRateSlider = new JSlider(1, 20, settings.getEnemyDescentRate());
+        descentRateSlider = new JSlider(10, 40, settings.getEnemyDescentRate());
         panel.add(descentRateSlider);
 
         panel.add(new JLabel("Liczba wrogów na linię:"));

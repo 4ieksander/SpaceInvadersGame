@@ -37,7 +37,7 @@ public class GameEngine {
         setupEnemies();
         player = new Player(380, 550, 3);
         this.gamePanel.setGameObjects(enemies, bullets, player);
-        
+
         this.collisionManager = new CollisionManager(enemies, bullets, player);
 
     }
@@ -64,12 +64,23 @@ public class GameEngine {
     }
 
     private void gameLoop() {
+        int fps = 30;
+        int counterToDescentRate = settings.getEnemyDescentRate();
+        int i = 0;
         while (isRunning) {
             updateGame();
             collisionManager.checkCollisions();
             SwingUtilities.invokeLater(() -> gamePanel.repaint());
             try {
-                Thread.sleep(1000 / 10);
+                Thread.sleep(1000 / fps); // 30FPS
+                i += 1;
+                if (i == counterToDescentRate){
+                    i = 0;
+                    for (Enemy enemy : enemies){
+                        enemy.moveVertically();
+                    }
+                }
+
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             }
