@@ -1,5 +1,6 @@
 package org.game.gui;
 
+import org.game.models.GameSettings;
 import org.game.services.GameEngine;
 import org.game.services.RenderService;
 import org.game.models.Player;
@@ -10,6 +11,7 @@ import org.game.services.InputHandler;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Set;
 
 
 public class GameWindow {
@@ -24,26 +26,19 @@ public class GameWindow {
         frame.setSize(800, 700);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
-
         inputHandler = new InputHandler();
-
-        Player player = new Player(400, 500, 3);
-        ArrayList<Enemy> enemies = new ArrayList<>();
-        ArrayList<Bullet> bullets = new ArrayList<>();
-
-        gameEngine = new GameEngine(player, enemies, bullets);
 
         JPanel gamePanel = createGamePanel();
 
 
-        gameEngine = new GameEngine(player, enemies, bullets);
+        gameEngine = new GameEngine(new GameSettings());
         gameEngine.setGamePanel(gamePanel);
         gameEngine.setInputHandler(inputHandler);
-
+        gameEngine.initializeGame();
         Enemy enemy = new Enemy(50,50,100); //test
-        gameEngine.addEnemy(enemy);
+//        gameEngine.addEnemy(enemy);
 
-        renderService = new RenderService(gamePanel);
+        renderService = new RenderService();
 
         initializeUI(gamePanel);
         frame.setVisible(true);

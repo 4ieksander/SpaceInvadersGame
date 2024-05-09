@@ -1,5 +1,6 @@
 package org.game.services;
 
+import org.game.models.GameSettings;
 import org.game.models.Player;
 import org.game.models.Enemy;
 import org.game.models.Bullet;
@@ -16,6 +17,8 @@ public class GameEngine {
     private Thread gameThread;
     private JPanel gamePanel;
     private InputHandler inputHandler;
+    private GameSettings settings;
+
 
 
     public GameEngine(Player player, List<Enemy> enemies, List<Bullet> bullets) {
@@ -24,6 +27,21 @@ public class GameEngine {
         this.bullets = bullets;
         this.isRunning = false;
     }
+
+    public GameEngine(GameSettings gameSettings) {
+        this.settings = gameSettings;
+        this.enemies = new ArrayList<>();
+        this.bullets = new ArrayList<>();
+        this.isRunning = false;
+    }
+
+    public void initializeGame() {
+        enemies.clear();
+        bullets.clear();
+        setupEnemies();
+        player = new Player(350, 450, 3);
+    }
+
 
     public void startGame() {
         System.out.println(enemies);
@@ -76,7 +94,17 @@ public class GameEngine {
         //TODO
     }
 
-
+    private void setupEnemies() {
+        int numberOfEnemies = settings.getEnemyCount();
+        int rows = settings.getEnemyRows();
+        // Przykładowe rozstawienie wrogów w siatce
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < numberOfEnemies / rows; col++) {
+                Enemy enemy = new Enemy(col * 50, row * 50, 1); // Zakładając, że konstruktor Enemy przyjmuje pozycje x, y
+                enemies.add(enemy);
+            }
+        }
+    }
     public boolean isGameRunning() {
         return isRunning;
     }
