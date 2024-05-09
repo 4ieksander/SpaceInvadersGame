@@ -44,4 +44,12 @@ public class Player implements ILiveObject {
     public void shoot() {
         new Bullet(this.xPosition, this.yPosition - 1, this.bulletSpeed);
     }
+
+    public int getXPosition() {
+        return xPosition;
+    }
+
+    public int getYPosition() {
+        return yPosition;
+    }
 }
