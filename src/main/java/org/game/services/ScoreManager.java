@@ -6,20 +6,17 @@ import java.nio.file.*;
 import java.util.*;
 
 public class ScoreManager {
-    private String filePath;
+    private static String filePath = System.getProperty("user.dir") + "\\src\\main\\resources\\scores.txt";
     private List<String> scoreList;
 
-    public ScoreManager(String filePath) {
-        this.filePath = filePath;
+    public ScoreManager() {
         this.scoreList = new ArrayList<>();
         loadScores();
     }
 
 
     public static void showTopScores() {
-        String currentDirectory = System.getProperty("user.dir");
-        String scoresPath = currentDirectory + "\\src\\main\\resources\\scores.txt";
-        ScoreManager scoreManager = new ScoreManager(scoresPath);
+        ScoreManager scoreManager = new ScoreManager();
         String topScores = scoreManager.getTopScores();
         JOptionPane.showMessageDialog(null, "Top 10 Scores:\n" + topScores, "Top Scores", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -33,14 +30,17 @@ public class ScoreManager {
         }
     }
 
-    public void addScore(String player, int score) {
-        scoreList.add(player + " - " + score);
+    public boolean addScore(String player, int score) {
+        String newEntry = player + " - " + score;
+        scoreList.add(newEntry);
         Collections.sort(scoreList, (a, b) -> Integer.compare(Integer.parseInt(b.split(" - ")[1]), Integer.parseInt(a.split(" - ")[1])));
         if (scoreList.size() > 10) {
             scoreList = scoreList.subList(0, 10);
         }
         saveScores();
+        return scoreList.contains(newEntry);
     }
+
 
     private void saveScores() {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath))) {

@@ -63,12 +63,8 @@ public class GameEngine {
 
     public void stopGame() {
         isRunning = false;
-        try {
-            if (gameThread != null) {
-                gameThread.join();
-            }
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
+        if (gameThread != null) {
+            gameThread.interrupt();
         }
     }
 
@@ -213,20 +209,34 @@ public class GameEngine {
 
     private void checkGameOver() {
         if (gameOver) {
-            gamePanel.displayGameOver();
             checkForHighScore();
             stopGame();
+            System.out.println("Game Over");
+            SwingUtilities.invokeLater(() -> {
+                gamePanel.displayGameOver();
+            });
+            initializeGame();
+
+            gameOver = false;
         }
     }
 
+
     public void checkForHighScore() {
         int currentScore = this.score;
-        ScoreManager scoreManager = new ScoreManager("scores.txt");
-        scoreManager.addScore(settings.getPlayerName(), currentScore);
+        String playerName = settings.getPlayerName();
+        ScoreManager scoreManager = new ScoreManager();
+        boolean isInTopTen = scoreManager.addScore(playerName, currentScore);
 
-        JOptionPane.showMessageDialog(null, "Gratulacje! Twój wynik to: " + currentScore + ". Zajmujesz miejsce w Top 10!");
-        scoreManager.addScore(settings.getPlayerName(), currentScore);
+        SwingUtilities.invokeLater(() -> {
+            if (isInTopTen) {
+                JOptionPane.showMessageDialog(null, "Gratulacje, " + playerName + "! Twój wynik " + currentScore + " znajduje się w Top 10!");
+            } else {
+                JOptionPane.showMessageDialog(null, playerName + ", twój wynik to " + currentScore + ". Niestety, nie udało się znaleźć miejsca w Top 10.");
+            }
+        });
     }
+
 
 
 

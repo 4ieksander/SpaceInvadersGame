@@ -24,6 +24,8 @@ public class GameWindow extends JFrame {
         frame.setSize(800, 700);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
+        frame.setLocationRelativeTo(null);
+
 
 
         inputHandler = new InputHandler();
@@ -106,7 +108,14 @@ public class GameWindow extends JFrame {
 
 
     private void showRules() {
-        JOptionPane.showMessageDialog(frame, "Zasady gry.");
+        JOptionPane.showMessageDialog(frame, "Zasady gry:\n" +
+                "- Zabij jak najwięcej przeciwników\n" +
+                "- Jeśli chcesz mieć możliwość zdobycia większej ilości punktów to zwiększ:\n" +
+                "       - poziom trudności,\n" +
+                "       - liczbę linii\n" +
+                "       - włącz tryb hardcore\n" +
+                "- Gdy przeciwnicy dojdą do ciebie, przegrywasz\n" +
+                "- Gdy stracisz wszystkie życia, również przegrywasz\n");
     }
 
 

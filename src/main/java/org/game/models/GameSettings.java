@@ -11,8 +11,8 @@ public class GameSettings {
     // Constructor with default settings
     public GameSettings(String playerName) {
         this.playerName = playerName;
-        this.enemyDescentRate = 40;
-        this.enemyRows = 4;
+        this.enemyDescentRate = 5;
+        this.enemyRows = 10;
         this.difficultyLevel = DifficultyLevel.MEDIUM;
         this.hardcoreMode = false;
     }

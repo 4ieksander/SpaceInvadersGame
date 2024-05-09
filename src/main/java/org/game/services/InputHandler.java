@@ -13,7 +13,6 @@ public class InputHandler extends KeyAdapter {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
                 leftPressed = true;
-                System.out.println("Left pressed");
                 break;
             case KeyEvent.VK_RIGHT:
                 rightPressed = true;
