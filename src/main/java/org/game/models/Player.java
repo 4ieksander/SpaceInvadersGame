@@ -2,6 +2,7 @@ package org.game.models;
 
 import org.game.interfaces.ILiveObject;
 
+import java.awt.*;
 import java.sql.Time;
 import java.util.Timer;
 import javax.swing.*;
@@ -77,9 +78,26 @@ public class Player implements ILiveObject {
         }
     }
 
+    public void draw(Graphics g, JPanel panel) {
+        if (shipLabel.getIcon() != null) {
+            // Rysowanie ikony w określonej lokalizacji
+            shipLabel.getIcon().paintIcon(panel, g, xPosition, yPosition);
+        } else {
+            // Rysowanie domyślnego kwadratu, jeśli ikona nie jest ustawiona
+            g.setColor(Color.BLUE);
+            g.fillRect(xPosition, yPosition, 50, 50);
+        }
 
+    }
     public void setShipIcon(Icon icon) {
         shipLabel.setIcon(icon);
+    }
+
+    public Icon getShipIcon() {
+        if (shipLabel.getIcon() != null) {
+            return shipLabel.getIcon();
+        }
+        return null;
     }
 
     public int getXPosition() {

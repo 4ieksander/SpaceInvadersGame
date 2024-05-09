@@ -85,9 +85,15 @@ public class GamePanel extends JPanel {
 
     private void drawPlayer(Graphics g, Player player) {
         if (player != null && player.isAlive()) {
-            g.setColor(Color.BLUE);
-            g.fillRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
+            if (player.getShipIcon() != null){
+                player.getShipIcon().paintIcon(this, g, player.getXPosition(), player.getYPosition());
+            }
+            else
+            {
+                g.setColor(Color.BLUE);
+                g.fillRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
         }
+            }
     }
 
     private void drawEnemies(Graphics g, List<Enemy> enemies) {
