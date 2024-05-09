@@ -86,6 +86,9 @@ public class Player implements ILiveObject {
         return width;
     }
 
+    public int getHealth(){
+        return health;
+    }
     public void setWidth(int width) {
         this.width = width;
     }

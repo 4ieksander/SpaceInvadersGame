@@ -16,6 +16,7 @@ public class GamePanel extends JPanel {
     private List<Bullet> bullets;
     private Player player;
     private JLabel scoreLabel;
+    private JLabel livesLabel;
 
     public GamePanel(InputHandler inputHandler) {
         setPreferredSize(new Dimension(gameWidth, gameHeight));
@@ -23,14 +24,22 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         setBackground(Color.WHITE);
+        setLayout(new BorderLayout());
 
-        scoreLabel = new JLabel("Score: 0", SwingConstants.CENTER);
+        scoreLabel = new JLabel("Score: 0", SwingConstants.LEFT);
+        livesLabel = new JLabel("Lives: 3", SwingConstants.RIGHT);
+
         scoreLabel.setOpaque(true);
         scoreLabel.setBackground(Color.BLACK);
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        setLayout(new BorderLayout());
-        add(scoreLabel, BorderLayout.NORTH);
+        livesLabel.setOpaque(true);
+        livesLabel.setBackground(Color.BLACK);
+        livesLabel.setForeground(Color.WHITE);
+        livesLabel.setFont(new Font("Arial", Font.BOLD, 20));
+
+        add(scoreLabel, BorderLayout.SOUTH);
+        add(livesLabel, BorderLayout.NORTH);
 
         gameOverLabel = new JLabel("Game Over", SwingConstants.CENTER);
         gameOverLabel.setFont(new Font("Arial", Font.BOLD, 24));
@@ -54,6 +63,10 @@ public class GamePanel extends JPanel {
 
     public void updateScore(int score) {
         scoreLabel.setText("Score: " + score); // Metoda do aktualizacji wyniku na etykiecie
+    }
+
+    public void updateLives(int lives) {
+        livesLabel.setText("Lives: " + lives);
     }
 
     public void setGameObjects(List<Enemy> enemies, List<Bullet> bullets, Player player) {

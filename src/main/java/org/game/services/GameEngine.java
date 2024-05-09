@@ -17,6 +17,7 @@ public class GameEngine {
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
+    private int playerLives;
     private boolean isRunning;
     private Thread gameThread;
     private GamePanel gamePanel;
@@ -40,7 +41,8 @@ public class GameEngine {
         enemies.clear();
         bullets.clear();
         setupEnemies();
-        player = new Player(380, 550, 3);
+        player = new Player(380, 510, 3);
+        playerLives = 3;
         this.gamePanel.setGameObjects(enemies, bullets, player);
         this.collisionManager = new CollisionManager(enemies, bullets, player);
         initializeShooting();
@@ -82,7 +84,7 @@ public class GameEngine {
                     i = 0;
                     for (Enemy enemy : enemies){
                         enemy.moveVertically();
-                        if (enemy.getYPosition() >= GamePanel.getGameHeight() - 50) {
+                        if (enemy.getYPosition() >= GamePanel.getGameHeight() - 100) {
                             gameOver = true;
                             break;
                         }
@@ -195,10 +197,17 @@ public class GameEngine {
         }
     }
 
-    private void checkGameOver() {
+    private void checkPlayerLives(){
+        if (player.getHealth() < playerLives){
+            playerLives -= 1;
+            gamePanel.updateLives(playerLives);
+        }
         if (!player.isAlive()){
             gameOver = true;
         }
+    }
+
+    private void checkGameOver() {
         if (gameOver) {
             gamePanel.displayGameOver();
             stopGame();
