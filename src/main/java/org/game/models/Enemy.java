@@ -4,7 +4,7 @@ import org.game.interfaces.ILiveObject;
 import org.game.interfaces.IMovableVertically;
 
 public class Enemy implements ILiveObject, IMovableVertically {
-    private static boolean movingRight;
+    private static boolean movingRight = true;
     private int xPosition;
     private int yPosition;
     private int width;
@@ -26,8 +26,13 @@ public class Enemy implements ILiveObject, IMovableVertically {
         return movingRight;
     }
 
-    public static void setMovingRight(boolean movingRight) {
-        Enemy.movingRight = movingRight;
+    public static void reverseDirection() {
+        if (Enemy.movingRight){
+            Enemy.movingRight = false;
+        }
+        else{
+            Enemy.movingRight = true;
+        }
     }
 
     @Override

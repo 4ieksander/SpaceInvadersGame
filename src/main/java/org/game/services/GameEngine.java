@@ -85,7 +85,15 @@ public class GameEngine {
             bullet.moveVertically();
         }
         for (Enemy enemy : enemies) {
-            enemy.moveRight();
+            if (Enemy.isMovingRight()){
+                enemy.moveRight();
+            }
+            else{
+                enemy.moveLeft();
+            }
+            if (enemy.getXPosition() > GamePanel.getGameWidth() - enemy.getWidth() || enemy.getXPosition() < 0) {
+                Enemy.reverseDirection();
+            }
         }
         if (inputHandler.isLeftPressed()) {
             player.moveLeft();

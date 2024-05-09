@@ -9,17 +9,26 @@ import java.awt.*;
 import java.util.List;
 
 public class GamePanel extends JPanel {
+    private final static int gameWidth = 800;
+    private final static int gameHeight = 600;
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
 
     public GamePanel(InputHandler inputHandler) {
-        setPreferredSize(new Dimension(800, 600));
+        setPreferredSize(new Dimension(gameWidth, gameHeight));
         addKeyListener(inputHandler);
         setFocusable(true);
         requestFocusInWindow();
         setBackground(Color.WHITE);
         }
+
+    public static int getGameWidth() {
+        return gameWidth;
+    }
+    public static int getGameHeight() {
+        return gameHeight;
+    }
 
     public void setGameObjects(List<Enemy> enemies, List<Bullet> bullets, Player player) {
         this.enemies = enemies;
