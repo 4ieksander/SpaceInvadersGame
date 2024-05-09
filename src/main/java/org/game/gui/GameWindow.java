@@ -19,11 +19,12 @@ public class GameWindow {
     public GameWindow() {
         frame = new JFrame("Space Invaders");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600);
+        frame.setSize(800, 700);
+        frame.setResizable(false); // Uniemożliwia zmianę rozmiaru okna-
         frame.setLayout(new BorderLayout());
 
 
-        Player player = new Player(100, 200, 3);
+        Player player = new Player(400, 500, 3);
 
         ArrayList<Enemy> enemies = new ArrayList<>();
         ArrayList<Bullet> bullets = new ArrayList<>();
@@ -97,6 +98,10 @@ public class GameWindow {
         JButton leftButton = new JButton("<");
         JButton shootButton = new JButton("Shoot");
         JButton rightButton = new JButton(">");
+
+        leftButton.addActionListener(e -> gameEngine.getPlayer().moveLeft());
+        shootButton.addActionListener(e -> gameEngine.getPlayer().shoot());
+        rightButton.addActionListener(e -> gameEngine.getPlayer().moveRight());
 
         controlPanel.add(leftButton);
         controlPanel.add(shootButton);
