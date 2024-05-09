@@ -3,6 +3,7 @@ package org.game.gui;
 import org.game.models.GameSettings;
 import org.game.services.GameEngine;
 import org.game.services.InputHandler;
+import org.game.services.ScoreManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +27,7 @@ public class GameWindow extends JFrame {
 
 
         inputHandler = new InputHandler();
-        gameSettings = new GameSettings();
+        gameSettings = new GameSettings(playerName);
 
         JButton startButton = new JButton("Start");
         JButton pauseButton = new JButton("Pauza");
@@ -75,6 +76,7 @@ public class GameWindow extends JFrame {
         JMenuItem startItem = new JMenuItem("Start");
         JMenuItem pauseItem = new JMenuItem("Pauza");
         JMenuItem restartItem = new JMenuItem("Restart");
+        JMenuItem showTopScores = new JMenuItem("Zobacz najlepsze wyniki");
         JMenuItem rulesItem = new JMenuItem("Zasady gry");
         JMenuItem settingsItem = new JMenuItem("Ustawienia");
         JMenuItem exitItem = new JMenuItem("Wyjście");
@@ -82,6 +84,7 @@ public class GameWindow extends JFrame {
         startItem.addActionListener(e -> startGame());
         pauseItem.addActionListener(e -> pauseGame());
         restartItem.addActionListener(e -> restartGame());
+        showTopScores.addActionListener(e -> ScoreManager.showTopScores());
         rulesItem.addActionListener(e -> showRules());
         settingsItem.addActionListener(e -> openSettingsDialog());
         exitItem.addActionListener(e -> System.exit(0));
@@ -90,6 +93,7 @@ public class GameWindow extends JFrame {
         gameMenu.add(pauseItem);
         gameMenu.add(restartItem);
         gameMenu.addSeparator();
+        gameMenu.add(showTopScores);
         gameMenu.add(rulesItem);
         gameMenu.add(settingsItem);
         gameMenu.addSeparator();

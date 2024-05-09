@@ -10,6 +10,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.game.gui.GameWindow;
+import org.game.services.ScoreManager;
 
 public class StartScreen extends JFrame {
     private JTextField playerNickField;
@@ -54,7 +55,7 @@ public class StartScreen extends JFrame {
         lowerPanel.add(startButton);
 
         scoresButton = new JButton("Top 10 Scores");
-        scoresButton.addActionListener(e -> showScores());
+        scoresButton.addActionListener(e -> ScoreManager.showTopScores());
         lowerPanel.add(scoresButton);
 
         background.add(lowerPanel, BorderLayout.SOUTH);
@@ -67,17 +68,6 @@ public class StartScreen extends JFrame {
         String playerName = playerNickField.getText();
         GameWindow.startGame(playerName, selectedIcon);  // Założenie, że GameWindow obsługuje teraz ikonę statku
         this.dispose();
-    }
-
-    private void showScores() {
-        try {
-            List<String> scores = Files.readAllLines(Paths.get("scores.txt"));
-            JOptionPane.showMessageDialog(this, "Top Scores:\n" + scores.stream()
-                    .limit(10)
-                    .collect(Collectors.joining("\n")));
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Failed to load scores.", "Error", JOptionPane.ERROR_MESSAGE);
-        }
     }
 
     class IconListRenderer extends DefaultListCellRenderer {

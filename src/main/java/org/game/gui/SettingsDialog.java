@@ -31,12 +31,12 @@ public class SettingsDialog extends JDialog {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(5, 2, 10, 10));
 
-        panel.add(new JLabel("Prędkość zniżania się wrogów:"));
-        descentRateSlider = new JSlider(5, 100, settings.getEnemyDescentRate());
+        panel.add(new JLabel("Prędkość zniżania się wrogów (szybko - wolno):"));
+        descentRateSlider = new JSlider(3, 100, settings.getEnemyDescentRate());
         panel.add(descentRateSlider);
 
-        panel.add(new JLabel("Liczba wrogów na linię:"));
-        enemyCountSpinner = new JSpinner(new SpinnerNumberModel(settings.getEnemyCount(), 1, 100, 1));
+        panel.add(new JLabel("Liczba lini wrogów:"));
+        enemyCountSpinner = new JSpinner(new SpinnerNumberModel(settings.getEnemyRows(), 1, 25, 1));
         panel.add(enemyCountSpinner);
 
         panel.add(new JLabel("Poziom trudności:"));
@@ -67,7 +67,7 @@ public class SettingsDialog extends JDialog {
 
     private void saveSettings() {
         settings.setEnemyDescentRate(descentRateSlider.getValue());
-        settings.setEnemyCount((Integer) enemyCountSpinner.getValue());
+        settings.setEnemyRows((Integer) enemyCountSpinner.getValue());
         settings.setDifficultyLevel((GameSettings.DifficultyLevel) difficultyComboBox.getSelectedItem());
         settings.setHardcoreMode(hardcoreModeCheckBox.isSelected());
         dispose();

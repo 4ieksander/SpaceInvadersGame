@@ -214,9 +214,21 @@ public class GameEngine {
     private void checkGameOver() {
         if (gameOver) {
             gamePanel.displayGameOver();
+            checkForHighScore();
             stopGame();
         }
     }
+
+    public void checkForHighScore() {
+        int currentScore = this.score;
+        ScoreManager scoreManager = new ScoreManager("scores.txt");
+        scoreManager.addScore(settings.getPlayerName(), currentScore);
+
+        JOptionPane.showMessageDialog(null, "Gratulacje! Twój wynik to: " + currentScore + ". Zajmujesz miejsce w Top 10!");
+        scoreManager.addScore(settings.getPlayerName(), currentScore);
+    }
+
+
 
     public boolean isGameRunning() {
         return isRunning;
