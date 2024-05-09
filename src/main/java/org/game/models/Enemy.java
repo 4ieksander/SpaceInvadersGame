@@ -4,8 +4,11 @@ import org.game.interfaces.ILiveObject;
 import org.game.interfaces.IMovableVertically;
 
 public class Enemy implements ILiveObject, IMovableVertically {
+    private static boolean movingRight;
     private int xPosition;
     private int yPosition;
+    private int width;
+    private int height;
     private int health;
     private boolean alive;
     private final int speed = 2;
@@ -15,6 +18,16 @@ public class Enemy implements ILiveObject, IMovableVertically {
         this.yPosition = startY;
         this.health = initialHealth;
         this.alive = true;
+        this.width = 20;
+        this.height = 20;
+    }
+
+    public static boolean isMovingRight() {
+        return movingRight;
+    }
+
+    public static void setMovingRight(boolean movingRight) {
+        Enemy.movingRight = movingRight;
     }
 
     @Override
@@ -46,8 +59,8 @@ public class Enemy implements ILiveObject, IMovableVertically {
      }
 
     @Override
-    public void shoot() {
-        new Bullet(this.xPosition, this.yPosition + 1, -speed);
+    public Bullet shoot() {
+        return new Bullet(this.xPosition, this.yPosition + 1, -speed);
     }
 
     // Getters
@@ -59,4 +72,19 @@ public class Enemy implements ILiveObject, IMovableVertically {
         return yPosition;
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
 }

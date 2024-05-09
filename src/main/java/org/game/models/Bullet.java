@@ -4,8 +4,10 @@ import org.game.interfaces.IHittable;
 import org.game.interfaces.IMovableVertically;
 
 public class Bullet implements IMovableVertically, IHittable {
+    private static int width = 5;
+    private static int height = 10;
     private int xPosition;
-    private int yPosition;
+    private int yPosition;;
     private int speed;  // speed positive -> go up; speed negative -> go down
     private boolean isAlive;
 
@@ -15,6 +17,15 @@ public class Bullet implements IMovableVertically, IHittable {
         this.speed = speed;
         this.isAlive = true;
     }
+
+    public static int getWidth() {
+        return width;
+    }
+
+    public static int getHeight() {
+        return height;
+    }
+
 
     @Override
     public boolean isAlive() {
@@ -43,6 +54,4 @@ public class Bullet implements IMovableVertically, IHittable {
     public int getYPosition() {
         return this.yPosition;
     }
-
-
 }

@@ -4,7 +4,6 @@ import org.game.models.Bullet;
 import org.game.models.Enemy;
 import org.game.models.Player;
 import org.game.services.InputHandler;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
@@ -39,7 +38,7 @@ public class GamePanel extends JPanel {
     private void drawPlayer(Graphics g, Player player) {
         if (player != null && player.isAlive()) {
             g.setColor(Color.BLUE);
-            g.fillRect(player.getXPosition(), player.getYPosition(), 20, 20);
+            g.fillRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
         }
     }
 
@@ -47,7 +46,7 @@ public class GamePanel extends JPanel {
         g.setColor(Color.RED);
         for (Enemy enemy : enemies) {
             if (enemy.isAlive()) {
-                g.fillRect(enemy.getXPosition(), enemy.getYPosition(), 20, 20);
+                g.fillRect(enemy.getXPosition(), enemy.getYPosition(), enemy.getWidth(), enemy.getHeight());
             }
         }
     }
@@ -56,7 +55,7 @@ public class GamePanel extends JPanel {
         g.setColor(Color.YELLOW);
         for (Bullet bullet : bullets) {
             if (bullet.isAlive()) {
-                g.fillRect(bullet.getXPosition(), bullet.getYPosition(), 5, 10);
+                g.fillRect(bullet.getXPosition(), bullet.getYPosition(), Bullet.getWidth(), Bullet.getHeight());
             }
         }
     }

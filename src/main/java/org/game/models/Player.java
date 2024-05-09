@@ -5,6 +5,8 @@ import org.game.interfaces.ILiveObject;
 public class Player implements ILiveObject {
     private int xPosition;
     private int yPosition;
+    private int width;
+    private int height;
     private int health;
     private boolean alive;
     private final int speed = 5; //Player speed
@@ -15,6 +17,8 @@ public class Player implements ILiveObject {
         this.yPosition = startY;
         this.health = initialHealth;
         this.alive = true;
+        this.width = 20;
+        this.height = 20;
     }
 
     @Override
@@ -41,8 +45,8 @@ public class Player implements ILiveObject {
     }
 
     @Override
-    public void shoot() {
-        new Bullet(this.xPosition, this.yPosition - 1, this.bulletSpeed);
+    public Bullet shoot() {
+        return new Bullet(this.xPosition, this.yPosition -30, - this.bulletSpeed);
     }
 
     public int getXPosition() {
@@ -51,5 +55,21 @@ public class Player implements ILiveObject {
 
     public int getYPosition() {
         return yPosition;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
     }
 }

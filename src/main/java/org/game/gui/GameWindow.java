@@ -29,12 +29,10 @@ public class GameWindow {
 
         GamePanel gamePanel = new GamePanel(inputHandler);
 
-
         gameEngine = new GameEngine(new GameSettings());
         gameEngine.setGamePanel(gamePanel);
         gameEngine.initializeGame();
         gameEngine.setInputHandler(inputHandler);
-
 
         initializeUI(gamePanel);
         frame.setVisible(true);
@@ -115,6 +113,7 @@ public class GameWindow {
 
     private void restartGame() {
         gameEngine.stopGame();
+        gameEngine.initializeGame();
         gameEngine.startGame();
     }
 

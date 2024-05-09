@@ -3,6 +3,8 @@ package org.game.services;
 import org.game.models.Bullet;
 import org.game.models.Enemy;
 import org.game.models.Player;
+
+import java.awt.*;
 import java.util.List;
 
 public class CollisionManager {
@@ -52,7 +54,25 @@ public class CollisionManager {
 
 
     private boolean bulletCollidesWith(Object obj, Bullet bullet) {
-        // TODO
-        return false;
+        Rectangle bulletRect = new Rectangle(bullet.getXPosition(), bullet.getYPosition(), Bullet.getWidth(), Bullet.getHeight());
+        int objX = 0, objY = 0, objWidth = 0, objHeight = 0;
+
+        if (obj instanceof Player) {
+            Player player = (Player) obj;
+            objX = player.getXPosition();
+            objY = player.getYPosition();
+            objWidth = player.getWidth();
+            objHeight = player.getHeight();
+        } else if (obj instanceof Enemy) {
+            Enemy enemy = (Enemy) obj;
+            objX = enemy.getXPosition();
+            objY = enemy.getYPosition();
+            objWidth = enemy.getWidth();
+            objHeight = enemy.getHeight();
+        }
+
+        Rectangle objRect = new Rectangle(objX, objY, objWidth, objHeight);
+        return bulletRect.intersects(objRect);
     }
+
 }

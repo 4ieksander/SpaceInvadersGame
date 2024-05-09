@@ -18,6 +18,7 @@ public class GameEngine {
     private GamePanel gamePanel;
     private InputHandler inputHandler;
     private GameSettings settings;
+    private CollisionManager collisionManager;
 
 
 
@@ -41,6 +42,7 @@ public class GameEngine {
         setupEnemies();
         player = new Player(350, 450, 3);
         this.gamePanel.setGameObjects(enemies, bullets, player);
+        this.collisionManager = new CollisionManager(enemies, bullets, player);
 
     }
 
@@ -68,6 +70,7 @@ public class GameEngine {
     private void gameLoop() {
         while (isRunning) {
             updateGame();
+            collisionManager.checkCollisions();
             SwingUtilities.invokeLater(() -> gamePanel.repaint());
             try {
                 Thread.sleep(1000 / 10);
@@ -82,7 +85,7 @@ public class GameEngine {
             bullet.moveVertically();
         }
         for (Enemy enemy : enemies) {
-            enemy.moveVertically();
+            enemy.moveRight();
         }
         if (inputHandler.isLeftPressed()) {
             player.moveLeft();
@@ -91,7 +94,7 @@ public class GameEngine {
             player.moveRight();
         }
         if (inputHandler.isSpacePressed()) {
-            player.shoot();
+            addBullet(player.shoot());
         }
         gamePanel.setGameObjects(enemies, bullets, player);
         //TODO
@@ -100,10 +103,9 @@ public class GameEngine {
     private void setupEnemies() {
         int numberOfEnemies = settings.getEnemyCount();
         int rows = settings.getEnemyRows();
-        // Przykładowe rozstawienie wrogów w siatce
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < numberOfEnemies / rows; col++) {
-                Enemy enemy = new Enemy(col * 50, row * 50, 1); // Zakładając, że konstruktor Enemy przyjmuje pozycje x, y
+                Enemy enemy = new Enemy(col * 50, row * 50, 1);
                 enemies.add(enemy);
             }
         }
