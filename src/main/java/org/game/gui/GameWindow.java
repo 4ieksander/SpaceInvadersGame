@@ -5,6 +5,7 @@ import org.game.services.RenderService;
 import org.game.models.Player;
 import org.game.models.Enemy;
 import org.game.models.Bullet;
+import org.game.services.InputHandler;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,26 +16,33 @@ public class GameWindow {
     private JFrame frame;
     private GameEngine gameEngine;
     private RenderService renderService;
+    private InputHandler inputHandler;
 
     public GameWindow() {
         frame = new JFrame("Space Invaders");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 700);
-        frame.setResizable(false); // Uniemożliwia zmianę rozmiaru okna-
+        frame.setResizable(false);
         frame.setLayout(new BorderLayout());
 
+        inputHandler = new InputHandler();
 
         Player player = new Player(400, 500, 3);
-
         ArrayList<Enemy> enemies = new ArrayList<>();
         ArrayList<Bullet> bullets = new ArrayList<>();
 
-        Enemy enemy = new Enemy(50,50,100); //test
-        enemies.add(enemy);
+        gameEngine = new GameEngine(player, enemies, bullets);
+
+        JPanel gamePanel = createGamePanel();
+
 
         gameEngine = new GameEngine(player, enemies, bullets);
-        JPanel gamePanel = createGamePanel();
         gameEngine.setGamePanel(gamePanel);
+        gameEngine.setInputHandler(inputHandler);
+
+        Enemy enemy = new Enemy(50,50,100); //test
+        gameEngine.addEnemy(enemy);
+
         renderService = new RenderService(gamePanel);
 
         initializeUI(gamePanel);
@@ -58,6 +66,9 @@ public class GameWindow {
                 renderService.drawBullets(g, gameEngine.getBullets());
             }
         };
+        gamePanel.addKeyListener(inputHandler);
+        gamePanel.setFocusable(true);
+        gamePanel.requestFocusInWindow();
         gamePanel.setBackground(Color.BLACK);
         return gamePanel;
     }

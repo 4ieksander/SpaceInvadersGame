@@ -15,6 +15,8 @@ public class GameEngine {
     private boolean isRunning;
     private Thread gameThread;
     private JPanel gamePanel;
+    private InputHandler inputHandler;
+
 
     public GameEngine(Player player, List<Enemy> enemies, List<Bullet> bullets) {
         this.player = player;
@@ -61,6 +63,15 @@ public class GameEngine {
         }
         for (Enemy enemy : enemies) {
             enemy.moveVertically();
+        }
+        if (inputHandler.isLeftPressed()) {
+            player.moveLeft();
+        }
+        if (inputHandler.isRightPressed()) {
+            player.moveRight();
+        }
+        if (inputHandler.isSpacePressed()) {
+            player.shoot();
         }
         //TODO
     }
@@ -119,8 +130,11 @@ public class GameEngine {
     public void setRunning(boolean running) {
         isRunning = running;
     }
+
     public void setGamePanel(JPanel panel) {
         this.gamePanel = panel;
     }
-
+    public void setInputHandler(InputHandler inputHandler) {
+        this.inputHandler = inputHandler;
+    }
 }
