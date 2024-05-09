@@ -11,6 +11,7 @@ import java.util.List;
 public class GamePanel extends JPanel {
     private final static int gameWidth = 800;
     private final static int gameHeight = 600;
+    private JLabel gameOverLabel;
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
@@ -28,8 +29,14 @@ public class GamePanel extends JPanel {
         scoreLabel.setBackground(Color.BLACK);
         scoreLabel.setForeground(Color.WHITE);
         scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        this.setLayout(new BorderLayout());
-        this.add(scoreLabel, BorderLayout.NORTH);
+        setLayout(new BorderLayout());
+        add(scoreLabel, BorderLayout.NORTH);
+
+        gameOverLabel = new JLabel("Game Over", SwingConstants.CENTER);
+        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        gameOverLabel.setForeground(Color.RED);
+        gameOverLabel.setVisible(false);
+        add(gameOverLabel);
         }
 
     public static int getGameWidth() {
@@ -37,6 +44,12 @@ public class GamePanel extends JPanel {
     }
     public static int getGameHeight() {
         return gameHeight;
+    }
+
+    public void displayGameOver() {
+        gameOverLabel.setVisible(true);
+        JOptionPane.showMessageDialog(this, "Game Over! Wróg dotarł do linii gracza.", "Koniec Gry", JOptionPane.ERROR_MESSAGE);
+        repaint();
     }
 
     public void updateScore(int score) {

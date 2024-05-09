@@ -60,11 +60,14 @@ public class Player implements ILiveObject {
     public Bullet shoot() {
         long currentTime = System.currentTimeMillis();
         Bullet bullet = new Bullet(this.xPosition, this.yPosition - 30, -this.bulletSpeed);
+        if (!isAlive()){
+            bullet.hit();
+        }
         if (currentTime - lastShotTime >= SHOT_INTERVAL) {
             lastShotTime = currentTime;
             return bullet;
         } else {
-            long timeToWait = SHOT_INTERVAL - (lastShotTime - currentTime);
+            long timeToWait = SHOT_INTERVAL - (currentTime - lastShotTime);
             System.out.println("Za szybko, do strzału zostało jeszcze " + timeToWait);
             bullet.hit();
             return bullet;

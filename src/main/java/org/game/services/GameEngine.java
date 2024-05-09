@@ -25,6 +25,7 @@ public class GameEngine {
     private CollisionManager collisionManager;
     private Timer shootingTimer;
     private int shootingInterval = 2000;
+    private boolean gameOver = false;
 
 
     public GameEngine(GameSettings gameSettings) {
@@ -81,6 +82,10 @@ public class GameEngine {
                     i = 0;
                     for (Enemy enemy : enemies){
                         enemy.moveVertically();
+                        if (enemy.getYPosition() >= GamePanel.getGameHeight() - 50) {
+                            gameOver = true;
+                            break;
+                        }
                     }
                 }
 
@@ -91,9 +96,26 @@ public class GameEngine {
     }
 
     private void updateGame() {
-        for (Bullet bullet : bullets) {
-            bullet.moveVertically();
+        updateBullets();
+        moveEnemyAndAddScore();
+        catchKeyboard();
+        gamePanel.setGameObjects(enemies, bullets, player);
+        checkGameOver();
+    }
+
+    private void catchKeyboard(){
+        if (inputHandler.isLeftPressed()) {
+            player.moveLeft();
         }
+        if (inputHandler.isRightPressed()) {
+            player.moveRight();
+        }
+        if (inputHandler.isSpacePressed()) {
+            addBullet(player.shoot());
+        }
+    }
+
+    private void moveEnemyAndAddScore(){
         int enemiesNotAlive = 0;
         for (Enemy enemy : enemies) {
             if (!enemy.isAlive()) enemiesNotAlive += 1;
@@ -111,17 +133,20 @@ public class GameEngine {
             score = enemiesNotAlive;
             gamePanel.updateScore(score);
         }
-        if (inputHandler.isLeftPressed()) {
-            player.moveLeft();
-        }
-        if (inputHandler.isRightPressed()) {
-            player.moveRight();
-        }
-        if (inputHandler.isSpacePressed()) {
-            addBullet(player.shoot());
-        }
-        gamePanel.setGameObjects(enemies, bullets, player);
     }
+    private void updateBullets() {
+        List<Bullet> bulletsToRemove = new ArrayList<>();
+        for (Bullet bullet : getBullets()) {
+            bullet.moveVertically();
+            if (bullet.isOffScreen(GamePanel.getGameHeight())) {
+                bulletsToRemove.add(bullet);
+            }
+            else if (!bullet.isAlive())
+                bulletsToRemove.add(bullet);
+        }
+        getBullets().removeAll(bulletsToRemove);
+    }
+
 
     private void setupEnemies() {
         int numberOfEnemiesPerLine = settings.getEnemyCountPerLine();
@@ -169,6 +194,17 @@ public class GameEngine {
             shootingTimer.setDelay(shootingInterval);
         }
     }
+
+    private void checkGameOver() {
+        if (!player.isAlive()){
+            gameOver = true;
+        }
+        if (gameOver) {
+            gamePanel.displayGameOver();
+            stopGame();
+        }
+    }
+
     public boolean isGameRunning() {
         return isRunning;
     }
