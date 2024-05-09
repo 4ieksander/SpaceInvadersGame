@@ -7,8 +7,8 @@ public class Player implements ILiveObject {
     private int yPosition;
     private int health;
     private boolean alive;
-    private final int speed = 5; // Prędkość przesunięcia w lewo/prawo
-    private final int bulletSpeed = 10; // Prędkość pocisku
+    private final int speed = 5; //Player speed
+    private final int bulletSpeed = 10;
 
     public Player(int startX, int startY, int initialHealth) {
         this.xPosition = startX;
@@ -42,5 +42,6 @@ public class Player implements ILiveObject {
 
     @Override
     public void shoot() {
+        new Bullet(this.xPosition, this.yPosition - 1, this.bulletSpeed);
     }
 }
