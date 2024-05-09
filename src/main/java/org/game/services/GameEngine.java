@@ -9,6 +9,8 @@ import org.game.models.Bullet;
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.awt.event.*;
+import java.util.Random;
 
 public class GameEngine {
     private int score;
@@ -21,6 +23,8 @@ public class GameEngine {
     private InputHandler inputHandler;
     private GameSettings settings;
     private CollisionManager collisionManager;
+    private Timer shootingTimer;
+    private int shootingInterval = 2000;
 
 
     public GameEngine(GameSettings gameSettings) {
@@ -37,9 +41,8 @@ public class GameEngine {
         setupEnemies();
         player = new Player(380, 550, 3);
         this.gamePanel.setGameObjects(enemies, bullets, player);
-
         this.collisionManager = new CollisionManager(enemies, bullets, player);
-
+        initializeShooting();
     }
 
 
@@ -118,7 +121,6 @@ public class GameEngine {
             addBullet(player.shoot());
         }
         gamePanel.setGameObjects(enemies, bullets, player);
-        //TODO
     }
 
     private void setupEnemies() {
@@ -137,6 +139,34 @@ public class GameEngine {
 
                 }
             }
+        }
+    }
+
+    private void initializeShooting() {
+        shootingTimer = new Timer(shootingInterval, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                enemyShoot();
+            }
+        });
+        shootingTimer.start();
+    }
+
+    private void enemyShoot() {
+        if (enemies.isEmpty()) return;
+        Random rand = new Random();
+        int shooterIndex = rand.nextInt(enemies.size());
+        Enemy shooter = enemies.get(shooterIndex);
+
+        if (shooter.isAlive()) {
+            bullets.add(shooter.shoot());
+        }
+        adjustShootingInterval();
+    }
+    private void adjustShootingInterval() {
+        if (shootingInterval > 500) {
+            shootingInterval -= 100;
+            shootingTimer.setDelay(shootingInterval);
         }
     }
     public boolean isGameRunning() {

@@ -30,8 +30,10 @@ public class CollisionManager {
             }
             for (Enemy enemy : enemies) {
                 if (enemy.isAlive() && bulletCollidesWith(enemy, bullet)) {
-                    enemy.hit();
-                    bullet.hit();
+                    if(bullet.getSpeed() < 0){
+                        enemy.hit();
+                        bullet.hit();
+                    }
                     if (!enemy.isAlive()) {
                     }
                     break;

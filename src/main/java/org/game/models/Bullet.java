@@ -54,4 +54,8 @@ public class Bullet implements IMovableVertically, IHittable {
     public int getYPosition() {
         return this.yPosition;
     }
+
+    public int getSpeed(){
+        return this.speed;
+    }
 }

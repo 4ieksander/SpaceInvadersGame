@@ -74,7 +74,7 @@ public class Enemy implements ILiveObject, IMovableVertically {
 
     @Override
     public Bullet shoot() {
-        return new Bullet(this.xPosition, this.yPosition + 1, -speed);
+        return new Bullet(this.xPosition, this.yPosition + 11, speed);
     }
 
     // Getters
