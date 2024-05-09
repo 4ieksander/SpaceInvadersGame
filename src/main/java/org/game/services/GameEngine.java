@@ -67,7 +67,7 @@ public class GameEngine {
     }
 
     private void gameLoop() {
-        int fps = 30;
+        int fps = 60;
         int counterToDescentRate = settings.getEnemyDescentRate();
         int i = 0;
         while (isRunning) {

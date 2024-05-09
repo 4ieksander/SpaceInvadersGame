@@ -10,7 +10,7 @@ public class GameSettings {
 
     // Constructor with default settings
     public GameSettings() {
-        this.enemyDescentRate = 20;
+        this.enemyDescentRate = 40;
         this.enemyCount = 32;
         this.enemyRows = 4;
         this.difficultyLevel = DifficultyLevel.MEDIUM;

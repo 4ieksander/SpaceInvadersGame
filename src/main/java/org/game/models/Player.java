@@ -2,6 +2,9 @@ package org.game.models;
 
 import org.game.interfaces.ILiveObject;
 
+import java.sql.Time;
+import java.util.Timer;
+
 public class Player implements ILiveObject {
     private int score;
     private int xPosition;
@@ -10,6 +13,8 @@ public class Player implements ILiveObject {
     private int height;
     private int health;
     private boolean alive;
+    private long lastShotTime = 0;
+    private static final int SHOT_INTERVAL = 500;
     private final int speed = 5; //Player speed
     private final int bulletSpeed = 10;
 
@@ -53,7 +58,17 @@ public class Player implements ILiveObject {
 
     @Override
     public Bullet shoot() {
-        return new Bullet(this.xPosition, this.yPosition -30, - this.bulletSpeed);
+        long currentTime = System.currentTimeMillis();
+        Bullet bullet = new Bullet(this.xPosition, this.yPosition - 30, -this.bulletSpeed);
+        if (currentTime - lastShotTime >= SHOT_INTERVAL) {
+            lastShotTime = currentTime;
+            return bullet;
+        } else {
+            long timeToWait = SHOT_INTERVAL - (lastShotTime - currentTime);
+            System.out.println("Za szybko, do strzału zostało jeszcze " + timeToWait);
+            bullet.hit();
+            return bullet;
+        }
     }
 
     public int getXPosition() {
