@@ -21,14 +21,6 @@ public class GameEngine {
     private CollisionManager collisionManager;
 
 
-
-    public GameEngine(Player player, List<Enemy> enemies, List<Bullet> bullets) {
-        this.player = player;
-        this.enemies = enemies;
-        this.bullets = bullets;
-        this.isRunning = false;
-    }
-
     public GameEngine(GameSettings gameSettings) {
         this.settings = gameSettings;
         this.enemies = new ArrayList<>();

@@ -33,7 +33,7 @@ public class CollisionManager {
                     enemy.hit();
                     bullet.hit();
                     if (!enemy.isAlive()) {
-                        //TODO SCORE
+                        player.addPoint();
                     }
                     break;
                 }

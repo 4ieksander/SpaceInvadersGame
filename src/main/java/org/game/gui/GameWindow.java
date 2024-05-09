@@ -38,6 +38,8 @@ public class GameWindow {
         frame.setVisible(true);
     }
 
+
+
     private void initializeUI(JPanel gamePanel) {
         frame.setJMenuBar(createMenuBar());
         frame.add(gamePanel, BorderLayout.CENTER);
@@ -99,7 +101,6 @@ public class GameWindow {
         JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel statusLabel = new JLabel("Score: 0");
         statusPanel.add(statusLabel);
-
         return statusPanel;
     }
 

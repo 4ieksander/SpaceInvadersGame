@@ -3,6 +3,7 @@ package org.game.models;
 import org.game.interfaces.ILiveObject;
 
 public class Player implements ILiveObject {
+    private int score;
     private int xPosition;
     private int yPosition;
     private int width;
@@ -12,11 +13,13 @@ public class Player implements ILiveObject {
     private final int speed = 5; //Player speed
     private final int bulletSpeed = 10;
 
+
     public Player(int startX, int startY, int initialHealth) {
         this.xPosition = startX;
         this.yPosition = startY;
         this.health = initialHealth;
         this.alive = true;
+        score = 0;
         this.width = 20;
         this.height = 20;
     }
@@ -32,6 +35,10 @@ public class Player implements ILiveObject {
         if (this.health <= 0) {
             this.alive = false;
         }
+    }
+
+    public void addPoint(){
+        score += 1;
     }
 
     @Override
@@ -71,5 +78,13 @@ public class Player implements ILiveObject {
 
     public void setHeight(int height) {
         this.height = height;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
