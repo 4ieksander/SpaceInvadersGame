@@ -1,26 +1,41 @@
 package org.game.models;
 
 public class GameSettings {
-    private int enemySpeed;
+    private int enemyDescentRate;
     private int enemyCount;
     private int enemyRows;
-    private String difficultyLevel;
+    public enum DifficultyLevel {EASY, MEDIUM, HARD}
+    private DifficultyLevel difficultyLevel;
+    private boolean hardcoreMode;
 
     // Constructor with default settings
     public GameSettings() {
-        this.enemySpeed = 1;
-        this.enemyCount = 10;
-        this.enemyRows = 2;
-        this.difficultyLevel = "Medium";
+        this.enemyDescentRate = 10;
+        this.enemyCount = 32;
+        this.enemyRows = 4;
+        this.difficultyLevel = DifficultyLevel.MEDIUM;
+        this.hardcoreMode = false;
+    }
+
+    public int getEnemyCountPerLine(){
+        if (difficultyLevel == DifficultyLevel.EASY){
+            return 8;
+        }
+        else if (difficultyLevel == DifficultyLevel.MEDIUM){
+            return 16;
+        }
+        else{
+            return 24;
+        }
     }
 
     // Gettery i settery
-    public int getEnemySpeed() {
-        return enemySpeed;
+    public int getEnemyDescentRate() {
+        return enemyDescentRate;
     }
 
-    public void setEnemySpeed(int enemySpeed) {
-        this.enemySpeed = enemySpeed;
+    public void setEnemyDescentRate(int enemySpeed) {
+        this.enemyDescentRate = enemySpeed;
     }
 
     public int getEnemyCount() {
@@ -40,11 +55,20 @@ public class GameSettings {
     }
 
 
-    public String getDifficultyLevel() {
+    public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;
     }
 
-    public void setDifficultyLevel(String difficultyLevel) {
+    public void  setDifficultyLevel(DifficultyLevel difficultyLevel) {
         this.difficultyLevel = difficultyLevel;
     }
+
+    public boolean isHardcoreMode() {
+        return hardcoreMode;
+    }
+
+    public void setHardcoreMode(boolean hardcoreMode) {
+        this.hardcoreMode = hardcoreMode;
+    }
+
 }

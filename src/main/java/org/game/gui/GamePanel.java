@@ -1,4 +1,4 @@
-package org.game.services;
+package org.game.gui;
 
 import org.game.models.Bullet;
 import org.game.models.Enemy;

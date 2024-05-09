@@ -2,22 +2,19 @@ package org.game.gui;
 
 import org.game.models.GameSettings;
 import org.game.services.GameEngine;
-import org.game.models.Player;
-import org.game.models.Enemy;
-import org.game.models.Bullet;
 import org.game.services.InputHandler;
-import org.game.services.GamePanel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Set;
+import java.awt.event.ActionListener;
 
 
-public class GameWindow {
+public class GameWindow extends JFrame {
     private JFrame frame;
     private GameEngine gameEngine;
     private InputHandler inputHandler;
+    private GameSettings gameSettings;
+
 
     public GameWindow() {
         frame = new JFrame("Space Invaders");
@@ -25,27 +22,44 @@ public class GameWindow {
         frame.setSize(800, 700);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
+
+
         inputHandler = new InputHandler();
+        gameSettings = new GameSettings();
+
+        JButton startButton = new JButton("Start");
+        JButton pauseButton = new JButton("Pauza");
+        startButton.addActionListener(e -> startGame());
+        pauseButton.addActionListener(e -> pauseGame());
+        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        northPanel.add(startButton);
+        northPanel.add(pauseButton);
 
         GamePanel gamePanel = new GamePanel(inputHandler);
 
-        gameEngine = new GameEngine(new GameSettings());
+
+        gameEngine = new GameEngine(gameSettings);
         gameEngine.setGamePanel(gamePanel);
         gameEngine.initializeGame();
         gameEngine.setInputHandler(inputHandler);
 
-        initializeUI(gamePanel);
+        initializeUI(gamePanel, northPanel);
         frame.setVisible(true);
     }
 
 
+    private void openSettingsDialog() {
+        SettingsDialog settingsDialog = new SettingsDialog(this, gameSettings);
+        settingsDialog.setVisible(true);
+    }
 
-    private void initializeUI(JPanel gamePanel) {
+
+    private void initializeUI(JPanel gamePanel, JPanel northPanel) {
         frame.setJMenuBar(createMenuBar());
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(createControlPanel(), BorderLayout.SOUTH);
+        frame.add(northPanel, BorderLayout.NORTH);
     }
-
 
 
     private JMenuBar createMenuBar() {
@@ -56,19 +70,26 @@ public class GameWindow {
         JMenuItem pauseItem = new JMenuItem("Pauza");
         JMenuItem restartItem = new JMenuItem("Restart");
         JMenuItem rulesItem = new JMenuItem("Zasady gry");
+        JMenuItem settingsItem = new JMenuItem("Ustawienia");
+        JMenuItem exitItem = new JMenuItem("Wyjście");
 
         startItem.addActionListener(e -> startGame());
         pauseItem.addActionListener(e -> pauseGame());
         restartItem.addActionListener(e -> restartGame());
         rulesItem.addActionListener(e -> showRules());
+        settingsItem.addActionListener(e -> openSettingsDialog());
+        exitItem.addActionListener(e -> System.exit(0));
 
         gameMenu.add(startItem);
         gameMenu.add(pauseItem);
         gameMenu.add(restartItem);
         gameMenu.addSeparator();
         gameMenu.add(rulesItem);
-
+        gameMenu.add(settingsItem);
+        gameMenu.addSeparator();
+        gameMenu.add(exitItem);
         menuBar.add(gameMenu);
+
 
         return menuBar;
     }
@@ -86,7 +107,7 @@ public class GameWindow {
         JButton rightButton = new JButton(">");
 
         leftButton.addActionListener(e -> gameEngine.getPlayer().moveLeft());
-        shootButton.addActionListener(e -> gameEngine.getPlayer().shoot());
+        shootButton.addActionListener(e -> gameEngine.addBullet(gameEngine.getPlayer().shoot()));
         rightButton.addActionListener(e -> gameEngine.getPlayer().moveRight());
 
         controlPanel.add(leftButton);
@@ -104,7 +125,7 @@ public class GameWindow {
         gameEngine.stopGame();
     }
 
-    private void restartGame() {
+    private void restartGame () {
         gameEngine.stopGame();
         gameEngine.initializeGame();
         gameEngine.startGame();

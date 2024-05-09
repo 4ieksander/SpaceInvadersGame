@@ -1,5 +1,6 @@
 package org.game.services;
 
+import org.game.gui.GamePanel;
 import org.game.models.GameSettings;
 import org.game.models.Player;
 import org.game.models.Enemy;
@@ -34,7 +35,7 @@ public class GameEngine {
         enemies.clear();
         bullets.clear();
         setupEnemies();
-        player = new Player(380, 580, 3);
+        player = new Player(380, 550, 3);
         this.gamePanel.setGameObjects(enemies, bullets, player);
         this.collisionManager = new CollisionManager(enemies, bullets, player);
 
