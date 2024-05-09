@@ -44,7 +44,6 @@ public class GameWindow {
         frame.setJMenuBar(createMenuBar());
         frame.add(gamePanel, BorderLayout.CENTER);
         frame.add(createControlPanel(), BorderLayout.SOUTH);
-        frame.add(createStatusPanel(), BorderLayout.NORTH);
     }
 
 
@@ -95,13 +94,6 @@ public class GameWindow {
         controlPanel.add(rightButton);
 
         return controlPanel;
-    }
-
-    private JPanel createStatusPanel() {
-        JPanel statusPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel statusLabel = new JLabel("Score: 0");
-        statusPanel.add(statusLabel);
-        return statusPanel;
     }
 
     private void startGame() {

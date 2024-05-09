@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameEngine {
+    private int score;
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
@@ -29,10 +30,11 @@ public class GameEngine {
     }
 
     public void initializeGame() {
+        score = 0;
         enemies.clear();
         bullets.clear();
         setupEnemies();
-        player = new Player(350, 450, 3);
+        player = new Player(380, 580, 3);
         this.gamePanel.setGameObjects(enemies, bullets, player);
         this.collisionManager = new CollisionManager(enemies, bullets, player);
 
@@ -76,7 +78,9 @@ public class GameEngine {
         for (Bullet bullet : bullets) {
             bullet.moveVertically();
         }
+        int enemiesNotAlive = 0;
         for (Enemy enemy : enemies) {
+            if (!enemy.isAlive()) enemiesNotAlive += 1;
             if (Enemy.isMovingRight()){
                 enemy.moveRight();
             }
@@ -86,6 +90,10 @@ public class GameEngine {
             if (enemy.getXPosition() > GamePanel.getGameWidth() - enemy.getWidth() || enemy.getXPosition() < 0) {
                 Enemy.reverseDirection();
             }
+        }
+        if (enemiesNotAlive != score){
+            score = enemiesNotAlive;
+            gamePanel.updateScore(score);
         }
         if (inputHandler.isLeftPressed()) {
             player.moveLeft();
@@ -105,7 +113,7 @@ public class GameEngine {
         int rows = settings.getEnemyRows();
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < numberOfEnemies / rows; col++) {
-                Enemy enemy = new Enemy(col * 50, row * 50, 1);
+                Enemy enemy = new Enemy(col * 50, 40+ row * 50, 1);
                 enemies.add(enemy);
             }
         }

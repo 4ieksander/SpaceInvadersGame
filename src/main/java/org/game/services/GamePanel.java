@@ -14,6 +14,7 @@ public class GamePanel extends JPanel {
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
+    private JLabel scoreLabel;
 
     public GamePanel(InputHandler inputHandler) {
         setPreferredSize(new Dimension(gameWidth, gameHeight));
@@ -21,6 +22,14 @@ public class GamePanel extends JPanel {
         setFocusable(true);
         requestFocusInWindow();
         setBackground(Color.WHITE);
+
+        scoreLabel = new JLabel("Score: 0", SwingConstants.CENTER);
+        scoreLabel.setOpaque(true);
+        scoreLabel.setBackground(Color.BLACK);
+        scoreLabel.setForeground(Color.WHITE);
+        scoreLabel.setFont(new Font("Arial", Font.BOLD, 20));
+        this.setLayout(new BorderLayout());
+        this.add(scoreLabel, BorderLayout.NORTH);
         }
 
     public static int getGameWidth() {
@@ -28,6 +37,10 @@ public class GamePanel extends JPanel {
     }
     public static int getGameHeight() {
         return gameHeight;
+    }
+
+    public void updateScore(int score) {
+        scoreLabel.setText("Score: " + score); // Metoda do aktualizacji wyniku na etykiecie
     }
 
     public void setGameObjects(List<Enemy> enemies, List<Bullet> bullets, Player player) {
