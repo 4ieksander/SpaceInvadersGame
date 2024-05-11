@@ -22,15 +22,6 @@ public class ScoreManager {
         JOptionPane.showMessageDialog(null, "Top 10 Scores:\n" + topScores, "Top Scores", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    private void loadScores() {
-        Path path = Paths.get(filePath);
-        try {
-            scoreList = Files.lines(path).collect(Collectors.toList());
-        } catch (IOException e) {
-            System.err.println("Error reading scores from file." + e.getMessage());
-        }
-    }
-
     public boolean addScore(String player, int score) {
         String newEntry = player + " - " + score;
         scoreList.add(newEntry);
@@ -42,6 +33,19 @@ public class ScoreManager {
         return scoreList.contains(newEntry);
     }
 
+    public String getTopScores() {
+        return String.join("\n", scoreList);
+    }
+
+
+    private void loadScores() {
+        Path path = Paths.get(filePath);
+        try {
+            scoreList = Files.lines(path).collect(Collectors.toList());
+        } catch (IOException e) {
+            System.err.println("Error reading scores from file." + e.getMessage());
+        }
+    }
 
     private void saveScores() {
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(filePath))) {
@@ -56,9 +60,5 @@ public class ScoreManager {
         }catch (IOException e) {
             System.err.println("Error writing scores to file." + e.getMessage());
         }
-    }
-
-    public String getTopScores() {
-        return String.join("\n", scoreList);
     }
 }

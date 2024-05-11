@@ -97,6 +97,13 @@ public class GameEngine {
     }
 
     private void updateGame() {
+        if (inputHandler.isEnterPressed()) {
+            if (!isRunning) {
+                startGame();
+            } else {
+                stopGame();
+            }
+        }
         updateBullets();
         moveEnemyAndAddScore();
         catchKeyboard();
@@ -238,11 +245,6 @@ public class GameEngine {
     }
 
 
-
-
-    public boolean isGameRunning() {
-        return isRunning;
-    }
 
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);

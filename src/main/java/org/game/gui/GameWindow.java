@@ -9,10 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame {
-    private JFrame frame;
-    private GameEngine gameEngine;
+    private final JFrame frame;
+    private final GameEngine gameEngine;
+    private final GameSettings gameSettings;
     private InputHandler inputHandler;
-    private GameSettings gameSettings;
 
     public GameWindow(String playerName, Icon shipIcon) {
         frame = new JFrame("Space Invaders - " + playerName);
@@ -22,32 +22,21 @@ public class GameWindow extends JFrame {
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
 
-        inputHandler = new InputHandler();
+        inputHandler = new InputHandler(this);
         gameSettings = new GameSettings(playerName);
         GamePanel gamePanel = new GamePanel(inputHandler);
+
         gameEngine =  new GameEngine(gameSettings, shipIcon);
         gameEngine.setGamePanel(gamePanel);
         gameEngine.setInputHandler(inputHandler);
         gameEngine.initializeGame();
 
-        JButton restartButton = new JButton("Restart");
-        JButton startButton = new JButton("               Start               ");
-        JButton pauseButton = new JButton("Pauza");
-        restartButton.addActionListener(e -> restartGame());
-        startButton.addActionListener(e -> startGame());
-        pauseButton.addActionListener(e -> pauseGame());
-        startButton.setFocusable(false);
-        restartButton.setFocusable(false);
-        pauseButton.setFocusable(false);
-
-        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        northPanel.add(restartButton);
-        northPanel.add(startButton);
-        northPanel.add(pauseButton);
+        JPanel northPanel = getjPanel();
 
         initializeUI(gamePanel, northPanel);
         frame.setVisible(true);
     }
+
 
     public GameWindow() {
         this("Unknown", new ImageIcon("src\\main\\resources\\SpaceInvader1.png"));
@@ -57,6 +46,25 @@ public class GameWindow extends JFrame {
     public static void startGame(String playerName, Icon shipIcon) {
         SwingUtilities.invokeLater(() -> new GameWindow(playerName, shipIcon));
     }
+
+    public boolean isGameRunning(){
+        return this.gameEngine.isRunning();
+    }
+
+    public void startGame() {
+        gameEngine.startGame();
+    }
+
+    private void pauseGame() {
+        gameEngine.stopGame();
+    }
+
+    private void restartGame () {
+        gameEngine.stopGame();
+        gameEngine.initializeGame();
+    }
+
+
 
 
     private void initializeUI(JPanel gamePanel, JPanel northPanel) {
@@ -116,6 +124,23 @@ public class GameWindow extends JFrame {
                 "- Gdy stracisz wszystkie życia, również przegrywasz\n");
     }
 
+    private JPanel getjPanel() {
+        JButton restartButton = new JButton("Restart");
+        JButton startButton = new JButton("               Start               ");
+        JButton pauseButton = new JButton("Pauza");
+        restartButton.addActionListener(e -> restartGame());
+        startButton.addActionListener(e -> startGame());
+        pauseButton.addActionListener(e -> pauseGame());
+        startButton.setFocusable(false);
+        restartButton.setFocusable(false);
+        pauseButton.setFocusable(false);
+
+        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        northPanel.add(restartButton);
+        northPanel.add(startButton);
+        northPanel.add(pauseButton);
+        return northPanel;
+    }
 
     private JPanel createControlPanel() {
         JPanel controlPanel = new JPanel(new GridLayout(1, 3));
@@ -136,20 +161,6 @@ public class GameWindow extends JFrame {
         controlPanel.add(rightButton);
 
         return controlPanel;
-    }
-
-
-    private void startGame() {
-        gameEngine.startGame();
-    }
-
-    private void pauseGame() {
-        gameEngine.stopGame();
-    }
-
-    private void restartGame () {
-        gameEngine.stopGame();
-        gameEngine.initializeGame();
     }
 
 

@@ -8,9 +8,9 @@ import java.awt.*;
 import java.util.List;
 
 public class CollisionManager {
-    private List<Enemy> enemies;
-    private List<Bullet> bullets;
-    private Player player;
+    private final List<Enemy> enemies;
+    private final List<Bullet> bullets;
+    private final Player player;
 
     public CollisionManager(List<Enemy> enemies, List<Bullet> bullets, Player player) {
         this.enemies = enemies;
@@ -18,10 +18,12 @@ public class CollisionManager {
         this.player = player;
     }
 
+
     public void checkCollisions() {
         checkBulletCollisions();
         checkPlayerCollisions();
     }
+
 
     private void checkBulletCollisions() {
         for (Bullet bullet : bullets) {
@@ -42,7 +44,6 @@ public class CollisionManager {
         }
     }
 
-
     private void checkPlayerCollisions() {
         for (Bullet bullet : bullets) {
             if (bullet.isAlive() && bulletCollidesWith(player, bullet)) {
@@ -53,19 +54,16 @@ public class CollisionManager {
         }
     }
 
-
     private boolean bulletCollidesWith(Object obj, Bullet bullet) {
         Rectangle bulletRect = new Rectangle(bullet.getXPosition(), bullet.getYPosition(), Bullet.getWidth(), Bullet.getHeight());
         int objX = 0, objY = 0, objWidth = 0, objHeight = 0;
 
-        if (obj instanceof Player) {
-            Player player = (Player) obj;
+        if (obj instanceof Player player) {
             objX = player.getXPosition();
             objY = player.getYPosition();
             objWidth = player.getWidth();
             objHeight = player.getHeight();
-        } else if (obj instanceof Enemy) {
-            Enemy enemy = (Enemy) obj;
+        } else if (obj instanceof Enemy enemy) {
             objX = enemy.getXPosition();
             objY = enemy.getYPosition();
             objWidth = enemy.getWidth();

@@ -2,7 +2,6 @@ package org.game.models;
 
 import org.game.interfaces.ILiveObject;
 
-import java.awt.*;
 import javax.swing.*;
 
 public class Player implements ILiveObject {
@@ -10,7 +9,6 @@ public class Player implements ILiveObject {
     private final JLabel shipLabel;
     private final int yPosition;
     private final int speed = 5; //Player speed
-    private int score;
     private int xPosition;
     private int width;
     private int height;
@@ -25,7 +23,6 @@ public class Player implements ILiveObject {
         this.yPosition = startY;
         this.health = initialHealth;
         this.alive = true;
-        this.score = 0;
         this.width = 20;
         this.height = 20;
     }

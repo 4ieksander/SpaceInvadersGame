@@ -43,7 +43,7 @@ public class Bullet implements IMovableVertically, IHittable {
     }
 
 
-    // gettery i settery
+    // getters
     public boolean isOffScreen(int screenHeight) {
         return this.yPosition < 0 || this.yPosition > screenHeight;
     }
