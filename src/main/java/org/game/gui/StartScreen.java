@@ -1,16 +1,8 @@
 package org.game.gui;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.game.gui.GameWindow;
 import org.game.services.ScoreManager;
+
 
 public class StartScreen extends JFrame {
     private JTextField playerNickField;
@@ -66,11 +58,11 @@ public class StartScreen extends JFrame {
     private void startGame() {
         Icon selectedIcon = (Icon) shipSelector.getSelectedItem();
         String playerName = playerNickField.getText();
-        GameWindow.startGame(playerName, selectedIcon);  // Założenie, że GameWindow obsługuje teraz ikonę statku
+        GameWindow.startGame(playerName, selectedIcon);
         this.dispose();
     }
 
-    class IconListRenderer extends DefaultListCellRenderer {
+    static class IconListRenderer extends DefaultListCellRenderer {
         @Override
         public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
             JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
@@ -79,6 +71,7 @@ public class StartScreen extends JFrame {
             return label;
         }
     }
+
 
     public static void main(String[] args) {
         new StartScreen();

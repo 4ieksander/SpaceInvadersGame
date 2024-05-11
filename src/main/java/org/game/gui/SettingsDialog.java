@@ -5,7 +5,6 @@ import java.awt.*;
 import org.game.models.GameSettings;
 
 public class SettingsDialog extends JDialog {
-    private final JFrame parentFrame;
     private JSlider descentRateSlider;
     private JSpinner enemyCountSpinner;
     private JComboBox<GameSettings.DifficultyLevel> difficultyComboBox;
@@ -14,12 +13,9 @@ public class SettingsDialog extends JDialog {
 
     public SettingsDialog(JFrame parentFrame, GameSettings settings) {
         super(parentFrame, "Ustawienia gry", true);
-        this.parentFrame = parentFrame;
-
-        setSize(300, 400);
         setLocationRelativeTo(parentFrame);
-        setLayout(new BorderLayout());
         this.settings = settings;
+
         setSize(400, 300);
         setLayout(new BorderLayout());
         add(createSettingsPanel(), BorderLayout.CENTER);
@@ -36,7 +32,7 @@ public class SettingsDialog extends JDialog {
         panel.add(descentRateSlider);
 
         panel.add(new JLabel("Liczba lini wrogów:"));
-        enemyCountSpinner = new JSpinner(new SpinnerNumberModel(settings.getEnemyRows(), 1, 25, 1));
+        enemyCountSpinner = new JSpinner(new SpinnerNumberModel(settings.getEnemyRows(), 1, 15, 1));
         panel.add(enemyCountSpinner);
 
         panel.add(new JLabel("Poziom trudności:"));

@@ -7,18 +7,14 @@ import org.game.services.ScoreManager;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionListener;
-
 
 public class GameWindow extends JFrame {
     private JFrame frame;
     private GameEngine gameEngine;
     private InputHandler inputHandler;
     private GameSettings gameSettings;
-    private Icon shipIcon;
 
     public GameWindow(String playerName, Icon shipIcon) {
-        this.shipIcon = shipIcon;
         frame = new JFrame("Space Invaders - " + playerName);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(800, 700);
@@ -26,40 +22,40 @@ public class GameWindow extends JFrame {
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
 
-
-
         inputHandler = new InputHandler();
         gameSettings = new GameSettings(playerName);
-
-        JButton startButton = new JButton("Start");
-        JButton pauseButton = new JButton("Pauza");
-        startButton.addActionListener(e -> startGame());
-        pauseButton.addActionListener(e -> pauseGame());
-        startButton.setFocusable(false);
-        pauseButton.setFocusable(false);
-
-        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        northPanel.add(startButton);
-        northPanel.add(pauseButton);
-
         GamePanel gamePanel = new GamePanel(inputHandler);
-
         gameEngine =  new GameEngine(gameSettings, shipIcon);
         gameEngine.setGamePanel(gamePanel);
         gameEngine.setInputHandler(inputHandler);
         gameEngine.initializeGame();
 
+        JButton restartButton = new JButton("Restart");
+        JButton startButton = new JButton("               Start               ");
+        JButton pauseButton = new JButton("Pauza");
+        restartButton.addActionListener(e -> restartGame());
+        startButton.addActionListener(e -> startGame());
+        pauseButton.addActionListener(e -> pauseGame());
+        startButton.setFocusable(false);
+        restartButton.setFocusable(false);
+        pauseButton.setFocusable(false);
+
+        JPanel northPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        northPanel.add(restartButton);
+        northPanel.add(startButton);
+        northPanel.add(pauseButton);
+
         initializeUI(gamePanel, northPanel);
         frame.setVisible(true);
     }
 
-    public static void startGame(String playerName, Icon shipIcon) {
-        SwingUtilities.invokeLater(() -> new GameWindow(playerName, shipIcon));
+    public GameWindow() {
+        this("Unknown", new ImageIcon("src\\main\\resources\\SpaceInvader1.png"));
     }
 
-    private void openSettingsDialog() {
-        SettingsDialog settingsDialog = new SettingsDialog(this, gameSettings);
-        settingsDialog.setVisible(true);
+
+    public static void startGame(String playerName, Icon shipIcon) {
+        SwingUtilities.invokeLater(() -> new GameWindow(playerName, shipIcon));
     }
 
 
@@ -69,7 +65,6 @@ public class GameWindow extends JFrame {
         frame.add(createControlPanel(), BorderLayout.SOUTH);
         frame.add(northPanel, BorderLayout.NORTH);
     }
-
 
     private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
@@ -102,10 +97,13 @@ public class GameWindow extends JFrame {
         gameMenu.add(exitItem);
         menuBar.add(gameMenu);
 
-
         return menuBar;
     }
 
+    private void openSettingsDialog() {
+        SettingsDialog settingsDialog = new SettingsDialog(this, gameSettings);
+        settingsDialog.setVisible(true);
+    }
 
     private void showRules() {
         JOptionPane.showMessageDialog(frame, "Zasady gry:\n" +
@@ -140,6 +138,7 @@ public class GameWindow extends JFrame {
         return controlPanel;
     }
 
+
     private void startGame() {
         gameEngine.startGame();
     }
@@ -151,10 +150,10 @@ public class GameWindow extends JFrame {
     private void restartGame () {
         gameEngine.stopGame();
         gameEngine.initializeGame();
-        gameEngine.startGame();
     }
 
+
     public static void main(String[] args) {
-//        SwingUtilities.invokeLater(GameWindow::new);
+        SwingUtilities.invokeLater(GameWindow::new);
     }
 }

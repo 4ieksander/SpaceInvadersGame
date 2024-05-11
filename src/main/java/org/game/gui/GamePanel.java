@@ -11,12 +11,12 @@ import java.util.List;
 public class GamePanel extends JPanel {
     private final static int gameWidth = 800;
     private final static int gameHeight = 600;
+    private final JLabel scoreLabel;
+    private final JLabel livesLabel;
     private final JLabel gameOverLabel;
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
-    private JLabel scoreLabel;
-    private JLabel livesLabel;
 
     public GamePanel(InputHandler inputHandler) {
         setPreferredSize(new Dimension(gameWidth, gameHeight));
@@ -62,7 +62,7 @@ public class GamePanel extends JPanel {
     }
 
     public void updateScore(int score) {
-        scoreLabel.setText("Score: " + score); // Metoda do aktualizacji wyniku na etykiecie
+        scoreLabel.setText("Score: " + score);
     }
 
     public void updateLives(int lives) {
@@ -74,6 +74,7 @@ public class GamePanel extends JPanel {
         this.bullets = bullets;
         this.player = player;
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
