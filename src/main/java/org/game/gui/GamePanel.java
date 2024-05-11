@@ -11,7 +11,7 @@ import java.util.List;
 public class GamePanel extends JPanel {
     private final static int gameWidth = 800;
     private final static int gameHeight = 600;
-    private JLabel gameOverLabel;
+    private final JLabel gameOverLabel;
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
