@@ -1,21 +1,22 @@
 package org.game.models;
 
 public class GameSettings {
+    private final String playerName;
     private int enemyDescentRate;
     private int enemyRows;
-    public enum DifficultyLevel {EASY, MEDIUM, HARD}
-    private DifficultyLevel difficultyLevel;
     private boolean hardcoreMode;
-    private String playerName;
+    private DifficultyLevel difficultyLevel;
+    public enum DifficultyLevel {EASY, MEDIUM, HARD}
 
-    // Constructor with default settings
+
     public GameSettings(String playerName) {
         this.playerName = playerName;
-        this.enemyDescentRate = 5;
-        this.enemyRows = 10;
+        this.enemyDescentRate = 15;
+        this.enemyRows = 4;
         this.difficultyLevel = DifficultyLevel.MEDIUM;
         this.hardcoreMode = false;
     }
+
 
     public int getEnemyCountPerLine(){
         if (hardcoreMode){
@@ -64,6 +65,7 @@ public class GameSettings {
         }
     }
 
+
     // Gettery i settery
     public String getPlayerName() {
         return playerName;
@@ -84,7 +86,6 @@ public class GameSettings {
     public void setEnemyRows(int enemyRows) {
         this.enemyRows = enemyRows;
     }
-
 
     public DifficultyLevel getDifficultyLevel() {
         return difficultyLevel;

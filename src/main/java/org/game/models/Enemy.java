@@ -5,13 +5,13 @@ import org.game.interfaces.IMovableVertically;
 
 public class Enemy implements ILiveObject, IMovableVertically {
     private static boolean movingRight = true;
+    private final int width;
+    private final int height;
+    private final int speed = 2;
     private int xPosition;
     private int yPosition;
-    private int width;
-    private int height;
     private int health;
     private boolean alive;
-    private final int speed = 2;
 
     public Enemy(int startX, int startY, int initialHealth) {
         this.xPosition = startX;
@@ -31,18 +31,15 @@ public class Enemy implements ILiveObject, IMovableVertically {
         this.height = height;
     }
 
+
     public static boolean isMovingRight() {
         return movingRight;
     }
 
     public static void reverseDirection() {
-        if (Enemy.movingRight){
-            Enemy.movingRight = false;
-        }
-        else{
-            Enemy.movingRight = true;
-        }
+        Enemy.movingRight = !Enemy.movingRight;
     }
+
 
     @Override
     public boolean isAlive() {
@@ -77,6 +74,7 @@ public class Enemy implements ILiveObject, IMovableVertically {
         return new Bullet(this.xPosition, this.yPosition + 11, speed);
     }
 
+
     // Getters
     public int getXPosition() {
         return xPosition;
@@ -90,15 +88,7 @@ public class Enemy implements ILiveObject, IMovableVertically {
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
     public int getHeight() {
         return height;
-    }
-
-    public void setHeight(int height) {
-        this.height = height;
     }
 }

@@ -42,10 +42,11 @@ public class Bullet implements IMovableVertically, IHittable {
         this.yPosition += this.speed;
     }
 
+
+    // gettery i settery
     public boolean isOffScreen(int screenHeight) {
         return this.yPosition < 0 || this.yPosition > screenHeight;
     }
-
 
     public int getXPosition() {
         return this.xPosition;
