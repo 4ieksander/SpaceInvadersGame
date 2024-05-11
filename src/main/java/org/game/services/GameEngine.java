@@ -54,6 +54,7 @@ public class GameEngine {
 
     public void startGame() {
         System.out.println(enemies);
+        gamePanel.hideEndGameLabel();
         if (gameThread == null || !gameThread.isAlive()) {
             isRunning = true;
             gameThread = new Thread(this::gameLoop);
@@ -66,6 +67,21 @@ public class GameEngine {
         if (gameThread != null) {
             gameThread.interrupt();
         }
+    }
+
+    public void checkForHighScore() {
+        int currentScore = this.score;
+        String playerName = settings.getPlayerName();
+        ScoreManager scoreManager = new ScoreManager();
+        boolean isInTopTen = scoreManager.addScore(playerName, currentScore);
+
+        SwingUtilities.invokeLater(() -> {
+            if (isInTopTen) {
+                JOptionPane.showMessageDialog(null, "Gratulacje, " + playerName + "! Twój wynik " + currentScore + " znajduje się w Top 10!");
+            } else {
+                JOptionPane.showMessageDialog(null, playerName + ", twój wynik to " + currentScore + ". Niestety, nie udało się znaleźć miejsca w Top 10.");
+            }
+        });
     }
 
     private void gameLoop() {
@@ -83,7 +99,7 @@ public class GameEngine {
                     i = 0;
                     for (Enemy enemy : enemies){
                         enemy.moveVertically();
-                        if (enemy.getYPosition() >= GamePanel.getGameHeight() - 100) {
+                        if (enemy.getYPosition() >= GamePanel.getGameHeight() - 90 && enemy.isAlive()) {
                             gameOver = true;
                             break;
                         }
@@ -143,6 +159,7 @@ public class GameEngine {
             gamePanel.updateScore(score);
         }
     }
+
     private void updateBullets() {
         List<Bullet> bulletsToRemove = new ArrayList<>();
         for (Bullet bullet : getBullets()) {
@@ -215,6 +232,10 @@ public class GameEngine {
     }
 
     private void checkGameOver() {
+        if (areAllEnemiesDead()){
+            gamePanel.displayEndGameLabel();
+            checkForHighScore();
+        };
         if (gameOver) {
             checkForHighScore();
             stopGame();
@@ -228,78 +249,33 @@ public class GameEngine {
         }
     }
 
-
-    public void checkForHighScore() {
-        int currentScore = this.score;
-        String playerName = settings.getPlayerName();
-        ScoreManager scoreManager = new ScoreManager();
-        boolean isInTopTen = scoreManager.addScore(playerName, currentScore);
-
-        SwingUtilities.invokeLater(() -> {
-            if (isInTopTen) {
-                JOptionPane.showMessageDialog(null, "Gratulacje, " + playerName + "! Twój wynik " + currentScore + " znajduje się w Top 10!");
-            } else {
-                JOptionPane.showMessageDialog(null, playerName + ", twój wynik to " + currentScore + ". Niestety, nie udało się znaleźć miejsca w Top 10.");
-            }
-        });
-    }
-
-
-
-    public void addEnemy(Enemy enemy) {
-        enemies.add(enemy);
+    private boolean areAllEnemiesDead() {
+        return enemies.stream().noneMatch(Enemy::isAlive);
     }
 
     public void addBullet(Bullet bullet) {
         bullets.add(bullet);
     }
 
-    public void removeEnemy(Enemy enemy) {
-        enemies.remove(enemy);
-    }
-
-    public void removeBullet(Bullet bullet) {
-        bullets.remove(bullet);
-    }
-
-
     // Getters and Setters
-    public List<Enemy> getEnemies() {
-        return enemies;
-    }
-
-    public void setEnemies(List<Enemy> enemies) {
-        this.enemies = enemies;
-    }
-
     public List<Bullet> getBullets() {
         return bullets;
-    }
-
-    public void setBullets(List<Bullet> bullets) {
-        this.bullets = bullets;
     }
 
     public Player getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public boolean isRunning() {
         return isRunning;
-    }
-
-    public void setRunning(boolean running) {
-        isRunning = running;
     }
 
     public void setGamePanel(GamePanel panel) {
         this.gamePanel = panel;
     }
+
     public void setInputHandler(InputHandler inputHandler) {
         this.inputHandler = inputHandler;
     }
+
 }

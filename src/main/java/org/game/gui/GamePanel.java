@@ -13,7 +13,7 @@ public class GamePanel extends JPanel {
     private final static int gameHeight = 600;
     private final JLabel scoreLabel;
     private final JLabel livesLabel;
-    private final JLabel gameOverLabel;
+    private final JLabel endGameLabel;
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
@@ -41,11 +41,13 @@ public class GamePanel extends JPanel {
         add(scoreLabel, BorderLayout.SOUTH);
         add(livesLabel, BorderLayout.NORTH);
 
-        gameOverLabel = new JLabel("Game Over", SwingConstants.CENTER);
-        gameOverLabel.setFont(new Font("Arial", Font.BOLD, 24));
-        gameOverLabel.setForeground(Color.RED);
-        gameOverLabel.setVisible(false);
-        add(gameOverLabel);
+        endGameLabel = new JLabel("Gratulacje! " +
+                "Zwiększ poziom trudności i spróbuj jeszcze raz!"
+                + SwingConstants.CENTER);
+        endGameLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        endGameLabel.setForeground(Color.RED);
+        endGameLabel.setVisible(false);
+        add(endGameLabel);
         }
 
     public static int getGameWidth() {
@@ -56,9 +58,15 @@ public class GamePanel extends JPanel {
     }
 
     public void displayGameOver() {
-        gameOverLabel.setVisible(true);
         JOptionPane.showMessageDialog(this, "Game Over!", "Koniec Gry", JOptionPane.ERROR_MESSAGE);
-        gameOverLabel.setVisible(false);
+    }
+
+    public void displayEndGameLabel(){
+        endGameLabel.setVisible(true);
+    }
+
+    public void hideEndGameLabel(){
+        endGameLabel.setVisible(false);
     }
 
     public void updateScore(int score) {
