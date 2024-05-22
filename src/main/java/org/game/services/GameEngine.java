@@ -17,17 +17,17 @@ public class GameEngine {
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
-    private int playerLives;
-    private boolean isRunning;
     private Thread gameThread;
     private GamePanel gamePanel;
     private InputHandler inputHandler;
     private GameSettings settings;
     private CollisionManager collisionManager;
     private Timer shootingTimer;
+    private Icon shipIcon;
     private int shootingInterval = 2000;
     private boolean gameOver = false;
-    private Icon shipIcon;
+    private int playerLives;
+    private boolean isRunning;
 
 
     public GameEngine(GameSettings gameSettings, Icon shipIcon) {
@@ -99,7 +99,7 @@ public class GameEngine {
                     i = 0;
                     for (Enemy enemy : enemies){
                         enemy.moveVertically();
-                        if (enemy.getYPosition() >= GamePanel.getGameHeight() - 90 && enemy.isAlive()) {
+                        if (enemy.getYPosition() >= gamePanel.getGameHeight() - 90 && enemy.isAlive()) {
                             gameOver = true;
                             break;
                         }
@@ -150,7 +150,7 @@ public class GameEngine {
             else{
                 enemy.moveLeft();
             }
-            if (enemy.getXPosition() > GamePanel.getGameWidth() - enemy.getWidth() || enemy.getXPosition() < 0) {
+            if (enemy.getXPosition() > gamePanel.getGameWidth() - 2*enemy.getWidth() || enemy.getXPosition() < 5) {
                 Enemy.reverseDirection();
             }
         }
@@ -164,7 +164,7 @@ public class GameEngine {
         List<Bullet> bulletsToRemove = new ArrayList<>();
         for (Bullet bullet : getBullets()) {
             bullet.moveVertically();
-            if (bullet.isOffScreen(GamePanel.getGameHeight())) {
+            if (bullet.isOffScreen(gamePanel.getGameHeight())) {
                 bulletsToRemove.add(bullet);
             }
             else if (!bullet.isAlive())
@@ -181,11 +181,11 @@ public class GameEngine {
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < numberOfEnemiesPerLine; col++) {
                 if (settings.isHardcoreMode()){
-                    Enemy enemy = new Enemy(col * distanceBetweenEnemies, 40 + row * distanceBetweenEnemies, 1, 10, 10);
+                    Enemy enemy = new Enemy(col * distanceBetweenEnemies + 5, 40 + row * distanceBetweenEnemies, 1, 10, 10);
                     enemies.add(enemy);
                 }
                 else{
-                    Enemy enemy = new Enemy(col * distanceBetweenEnemies, 40+ row * 40, 1);
+                    Enemy enemy = new Enemy(col * distanceBetweenEnemies + 5, 40+ row * 40, 1);
                     enemies.add(enemy);
 
                 }

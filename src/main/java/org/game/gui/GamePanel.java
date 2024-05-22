@@ -9,16 +9,19 @@ import java.awt.*;
 import java.util.List;
 
 public class GamePanel extends JPanel {
-    private final static int gameWidth = 800;
-    private final static int gameHeight = 600;
     private final JLabel scoreLabel;
     private final JLabel livesLabel;
     private final JLabel endGameLabel;
+    private final int gameWidth;
+    private final int gameHeight;
     private List<Enemy> enemies;
     private List<Bullet> bullets;
     private Player player;
 
-    public GamePanel(InputHandler inputHandler) {
+
+    public GamePanel(InputHandler inputHandler, int gameWidth, int gameHeight){
+        this.gameWidth = gameWidth;
+        this.gameHeight = gameHeight;
         setPreferredSize(new Dimension(gameWidth, gameHeight));
         addKeyListener(inputHandler);
         setFocusable(true);
@@ -50,10 +53,10 @@ public class GamePanel extends JPanel {
         add(endGameLabel);
         }
 
-    public static int getGameWidth() {
+    public int getGameWidth() {
         return gameWidth;
     }
-    public static int getGameHeight() {
+    public int getGameHeight() {
         return gameHeight;
     }
 

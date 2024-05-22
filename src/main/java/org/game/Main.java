@@ -1,16 +1,18 @@
-package org.game.gui;
+package org.game;
 import javax.swing.*;
 import java.awt.*;
+
+import org.game.gui.GameWindow;
 import org.game.services.ScoreManager;
 
 
-public class StartScreen extends JFrame {
+public class Main extends JFrame {
     private JTextField playerNickField;
     private JButton startButton;
     private JButton scoresButton;
     private JComboBox<Icon> shipSelector;
 
-    public StartScreen() {
+    public Main() {
         setTitle("Ekran startowy");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -74,6 +76,6 @@ public class StartScreen extends JFrame {
 
 
     public static void main(String[] args) {
-        new StartScreen();
+        new Main();
     }
 }

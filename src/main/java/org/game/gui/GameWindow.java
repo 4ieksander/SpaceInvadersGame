@@ -12,19 +12,22 @@ public class GameWindow extends JFrame {
     private final JFrame frame;
     private final GameEngine gameEngine;
     private final GameSettings gameSettings;
+    private final int windowWidth = 850;
+    private final int windowHeight = 700;
     private InputHandler inputHandler;
+
 
     public GameWindow(String playerName, Icon shipIcon) {
         frame = new JFrame("Space Invaders - " + playerName);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 700);
+        frame.setSize(windowWidth, windowHeight);
         frame.setResizable(false);
         frame.setLayout(new BorderLayout());
         frame.setLocationRelativeTo(null);
 
         inputHandler = new InputHandler(this);
         gameSettings = new GameSettings(playerName);
-        GamePanel gamePanel = new GamePanel(inputHandler);
+        GamePanel gamePanel = new GamePanel(inputHandler, windowWidth, windowHeight);
 
         gameEngine =  new GameEngine(gameSettings, shipIcon);
         gameEngine.setGamePanel(gamePanel);
