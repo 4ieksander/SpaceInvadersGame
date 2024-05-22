@@ -9,6 +9,9 @@ import java.awt.*;
 import java.util.List;
 
 public class GamePanel extends JPanel {
+    // Swing -> JPanel -  służący do grupowania różnych komponentów interfejsu użytkownika (UI).
+    // Jest to lekki kontener, który może być używany do organizowania komponentów, takich jak przyciski, etykiety, pola tekstowe
+    // i inne panele w jednym miejscu w ramach okna aplikacji lub innego kontenera.
     private final JLabel scoreLabel; // Etykieta wyświetlająca wynik
     private final JLabel livesLabel; // Etykieta wyświetlająca ilość żyć
     private final JLabel endGameLabel; // Etykieta wyświetlająca komunikat końcowy gry
@@ -104,6 +107,7 @@ public class GamePanel extends JPanel {
             {
                 g.setColor(Color.BLUE); // Kolor statku, gdy brak ikony
                 g.fillRect(player.getXPosition(), player.getYPosition(), player.getWidth(), player.getHeight());
+            // Metoda fillRect w klasie Graphics w Java Swing jest używana do rysowania wypełnionego prostokąta na komponentach GUI.
             }
         }
     }

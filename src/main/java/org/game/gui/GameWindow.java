@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame {
+    // Swing -> JFrame - służy do tworzenia okien w graficznym interfejsie użytkownika (GUI).
+    // JFrame działa jako główny kontener na inne komponenty
     private final JFrame frame; // Główne okno gry
     private final GameEngine gameEngine; // Silnik gry
     private final GameSettings gameSettings; // Ustawienia gry
@@ -108,7 +110,7 @@ public class GameWindow extends JFrame {
 
     private void openSettingsDialog() {
         SettingsDialog settingsDialog = new SettingsDialog(this, gameSettings); // Otwarcie okna dialogowego ustawień
-        settingsDialog.setVisible(true);
+        settingsDialog.setVisible(true);    // on ciągle jest wygenerowany, tylko jest ukryty. To częste podejście w programowaniu GUI
     }
 
     private void showRules() {
