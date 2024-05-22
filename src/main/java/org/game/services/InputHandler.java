@@ -6,37 +6,37 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class InputHandler extends KeyAdapter {
-    private GameWindow gameWindow;
-    private boolean leftPressed = false;
-    private boolean rightPressed = false;
-    private boolean spacePressed = false;
-    private boolean enterPressed = false;
+    private GameWindow gameWindow; // Referencja do głównego okna gry
+    private boolean leftPressed = false; // Czy klawisz lewo jest wciśnięty
+    private boolean rightPressed = false; // Czy klawisz prawo jest wciśnięty
+    private boolean spacePressed = false; // Czy klawisz spacji jest wciśnięty
+    private boolean enterPressed = false; // Czy klawisz enter jest wciśnięty
 
     public InputHandler(GameWindow gameWindow) {
-        this.gameWindow = gameWindow;
+        this.gameWindow = gameWindow; // Inicjalizacja okna gry
     }
 
     public boolean isLeftPressed() {
-        return leftPressed;
+        return leftPressed; // Zwraca stan klawisza lewo
     }
 
     public boolean isRightPressed() {
-        return rightPressed;
+        return rightPressed; // Zwraca stan klawisza prawo
     }
 
     public boolean isSpacePressed() {
-        return spacePressed;
+        return spacePressed; // Zwraca stan klawisza spacji
     }
 
     public boolean isEnterPressed() {
-        return enterPressed;
+        return enterPressed; // Zwraca stan klawisza enter
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
         if (!gameWindow.isGameRunning()) {
             if (e.getKeyCode() == KeyEvent.VK_ENTER){
-                gameWindow.startGame();
+                gameWindow.startGame(); // Rozpoczyna grę jeśli klawisz enter jest naciśnięty i gra nie jest aktywna
                 return;
             } else{
                 return;
@@ -45,16 +45,16 @@ public class InputHandler extends KeyAdapter {
 
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                leftPressed = true;
+                leftPressed = true; // Ustawienie stanu lewo na true
                 break;
             case KeyEvent.VK_RIGHT:
-                rightPressed = true;
+                rightPressed = true; // Ustawienie stanu prawo na true
                 break;
             case KeyEvent.VK_SPACE:
-                spacePressed = true;
+                spacePressed = true; // Ustawienie stanu spacji na true
                 break;
             case KeyEvent.VK_ENTER:
-                enterPressed = true;
+                enterPressed = true; // Ustawienie stanu enter na true
                 break;
         }
     }
@@ -63,16 +63,16 @@ public class InputHandler extends KeyAdapter {
     public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
             case KeyEvent.VK_LEFT:
-                leftPressed = false;
+                leftPressed = false; // Ustawienie stanu lewo na false
                 break;
             case KeyEvent.VK_RIGHT:
-                rightPressed = false;
+                rightPressed = false; // Ustawienie stanu prawo na false
                 break;
             case KeyEvent.VK_SPACE:
-                spacePressed = false;
+                spacePressed = false; // Ustawienie stanu spacji na false
                 break;
             case KeyEvent.VK_ENTER:
-                enterPressed = false;
+                enterPressed = false; // Ustawienie stanu enter na false
                 break;
         }
     }
